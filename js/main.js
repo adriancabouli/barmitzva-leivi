@@ -335,6 +335,22 @@
     });
   }
 
+  /* ---------- Alto real de la barra flotante ----------
+     El hero reserva justo ese espacio, así el botón nunca queda
+     tapado sea cual sea el alto de pantalla.                     */
+  var barra = document.querySelector('.capitulo--datos');
+  if (barra) {
+    var medirBarra = function () {
+      var fija = getComputedStyle(barra).position === 'fixed';
+      document.documentElement.style.setProperty(
+        '--barra', fija ? barra.offsetHeight + 'px' : '0px');
+    };
+    window.addEventListener('resize', medirBarra);
+    medirBarra();
+    // Las fuentes cambian el alto al cargar: volvemos a medir
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(medirBarra);
+  }
+
   /* ---------- Partículas doradas ---------- */
   var cont = document.getElementById('particulas');
   var animaOk = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;

@@ -35,6 +35,7 @@
 
   --max:1280px;
   --marco:clamp(12px,2.2vw,26px);   /* separación del filete al borde */
+  --barra:190px;                    /* alto real de la barra flotante, lo mide main.js */
 }
 
 /* ============================================================
@@ -191,7 +192,7 @@ p{margin:0 0 1em}
    ============================================================ */
 .divisor{
   display:flex;align-items:center;justify-content:center;gap:14px;
-  width:min(300px,72%);margin:clamp(11px,1.8vh,22px) auto;
+  width:min(300px,72%);margin:clamp(8px,1.3vh,17px) auto;
 }
 .divisor i{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--oro-600))}
 .divisor i:last-child{background:linear-gradient(90deg,var(--oro-600),transparent)}
@@ -271,7 +272,7 @@ p{margin:0 0 1em}
   display:flex;align-items:center;justify-content:center;
   /* Medido para que la portada entre completa —botón incluido— en
      pantallas de portátil de ~860px de alto. */
-  padding:clamp(96px,12.5vh,150px) 7vw clamp(150px,20vh,215px);
+  padding:clamp(68px,8.8vh,112px) 7vw calc(var(--barra, 190px) + clamp(20px,3.2vh,42px));
   text-align:center;
 }
 .hero__inner{width:min(760px,100%)}
@@ -306,7 +307,7 @@ p{margin:0 0 1em}
 
 .hero__nombre{
   font-family:var(--f-script);
-  font-size:clamp(4rem,13.6vmin,8.2rem);
+  font-size:clamp(3.7rem,12.4vmin,7.6rem);
   line-height:1.1;
   margin:.04em 0 0;padding:0 .1em .1em;
 }
@@ -321,7 +322,7 @@ p{margin:0 0 1em}
 /* ---- Countdown: pieza editorial ---- */
 .cuenta{
   display:flex;justify-content:center;align-items:flex-start;
-  margin:clamp(24px,4vh,46px) auto clamp(24px,3.6vh,42px);
+  margin:clamp(16px,2.4vh,30px) auto clamp(16px,2.2vh,27px);
   width:max-content;max-width:100%;
 }
 .cuenta__u{
