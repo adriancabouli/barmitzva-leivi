@@ -219,9 +219,17 @@
   var galEl = document.getElementById('galeria');
   var fotos = get('galeria.fotos') || [];
   if (galEl && fotos.length) {
+    // Con pocas fotos, la grilla se ajusta para que no queden estiradas
+    if (fotos.length < 3) galEl.classList.add('galeria--' + fotos.length);
+
     galEl.innerHTML = fotos.map(function (f, i) {
-      return '<button type="button" data-i="' + i + '" aria-label="Ampliar ' + f.alt + '">' +
-        '<img src="' + f.src + '" alt="' + f.alt + '" loading="lazy"></button>';
+      return '<button class="foto" type="button" data-i="' + i + '" aria-label="Ampliar: ' + f.alt + '">' +
+        '<img src="' + f.src + '" alt="' + f.alt + '" loading="lazy">' +
+        '<span class="foto__lupa"><svg viewBox="0 0 24 24" aria-hidden="true">' +
+          '<circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.4 15.4L21 21"/>' +
+        '</svg></span>' +
+        '<span class="foto__pie">' + f.alt + '</span>' +
+        '</button>';
     }).join('');
   }
 

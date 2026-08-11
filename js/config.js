@@ -127,14 +127,10 @@ window.CONFIG = {
   galeria: {
     titulo: "Momentos",
     subtitulo: "Un poco de nuestra historia hasta acá",
-    // DEMO: reemplazar cada src por la foto real, ej: "img/galeria/foto-1.jpg"
     fotos: [
-      { src: "img/galeria/demo-1.svg", alt: "Foto 1" },
-      { src: "img/galeria/demo-2.svg", alt: "Foto 2" },
-      { src: "img/galeria/demo-3.svg", alt: "Foto 3" },
-      { src: "img/galeria/demo-4.svg", alt: "Foto 4" },
-      { src: "img/galeria/demo-5.svg", alt: "Foto 5" },
-      { src: "img/galeria/demo-6.svg", alt: "Foto 6" }
+      { src: "img/galeria/foto-1.jpeg", alt: "Leivi tocando el shofar" },
+      { src: "img/galeria/foto-2.jpeg", alt: "Leivi con la Torá" },
+      { src: "img/galeria/foto-3.jpeg", alt: "Leivi bailando" }
     ]
   },
 
