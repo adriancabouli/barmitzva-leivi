@@ -275,11 +275,14 @@ main,header,footer{position:relative;z-index:1}
   transition:background .3s,color .3s,border-color .3s;
 }
 .btn:hover{background:var(--oro-500);color:var(--verde-900);border-color:var(--oro-500)}
+/* Oro plano, no degradé: en un botón el degradé se ve sucio al pasar el mouse. */
 .btn--gold{
-  background:var(--oro-grad);color:var(--verde-900);border-color:transparent;
+  background:var(--oro-500);color:var(--verde-900);border-color:var(--oro-500);
   width:100%;font-weight:600;
 }
-.btn--gold:hover{filter:brightness(1.08);color:var(--verde-900)}
+.btn--gold:hover{
+  background:var(--oro-600);border-color:var(--oro-600);color:var(--verde-900);
+}
 
 /* ---- Programa ---- */
 .programa{
