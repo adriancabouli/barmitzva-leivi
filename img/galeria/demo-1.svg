@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#17573F"/><stop offset="100%" stop-color="#071C15"/>
+    </linearGradient>
+    <linearGradient id="o" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F2DFAE"/><stop offset="100%" stop-color="#B8893A"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="800" fill="url(#bg)"/>
+  <rect x="22" y="22" width="556" height="756" fill="none" stroke="url(#o)" stroke-width="1.5" opacity=".65"/>
+  <g transform="translate(300 330) scale(1.05)" fill="none" stroke="url(#o)" stroke-linejoin="round">
+    <polygon stroke-width="5"
+      points="0,-45 12.99,-22.5 38.97,-22.5 25.98,0 38.97,22.5 12.99,22.5 0,45 -12.99,22.5 -38.97,22.5 -25.98,0 -38.97,-22.5 -12.99,-22.5"/>
+    <polygon stroke-width="2.4" opacity=".7"
+      points="12.99,-22.5 25.98,0 12.99,22.5 -12.99,22.5 -25.98,0 -12.99,-22.5"/>
+  </g>
+  <text x="300" y="480" text-anchor="middle" fill="url(#o)" font-family="Georgia,serif" font-size="30" letter-spacing="7">FOTO 1</text>
+  <text x="300" y="524" text-anchor="middle" fill="#F3EAD6" opacity=".55" font-family="Georgia,serif" font-size="19">imagen de muestra</text>
+</svg>

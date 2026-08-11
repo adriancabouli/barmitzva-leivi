@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bar Mitzvá de Leivi</title>
+<meta name="description" content="Queremos que seas parte de este día tan especial.">
+<meta name="theme-color" content="#0C2E23">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Bar Mitzvá de Leivi">
+<meta property="og:description" content="Queremos que seas parte de este día tan especial.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=Pinyon+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- Ornamento reutilizable para las esquinas del marco -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <g id="orn" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round">
+    <path d="M4 52 C 4 24, 24 4, 52 4"/>
+    <path d="M16 62 C 16 38, 38 16, 62 16" stroke-width="1.6" opacity=".7"/>
+    <path d="M52 4 C 70 4, 84 10, 84 22 C 84 31, 74 34, 69 29 C 64 24, 68 15, 78 17"/>
+    <path d="M4 52 C 4 70, 10 84, 22 84 C 31 84, 34 74, 29 69 C 24 64, 15 68, 17 78"/>
+    <circle cx="41" cy="41" r="2.6" fill="currentColor" stroke="none"/>
+  </g>
+</defs></svg>
+
+<!-- ============ HERO / SAVE THE DATE ============ -->
+<header class="hero">
+  <div class="frame">
+    <svg class="corner corner--tl" viewBox="0 0 100 100" aria-hidden="true"><use href="#orn"/></svg>
+    <svg class="corner corner--tr" viewBox="0 0 100 100" aria-hidden="true"><use href="#orn"/></svg>
+    <svg class="corner corner--bl" viewBox="0 0 100 100" aria-hidden="true"><use href="#orn"/></svg>
+    <svg class="corner corner--br" viewBox="0 0 100 100" aria-hidden="true"><use href="#orn"/></svg>
+
+    <div class="hero__inner">
+
+      <svg class="magen" viewBox="0 0 100 100" aria-hidden="true">
+        <polygon class="magen__out"
+          points="50,5 62.99,27.5 88.97,27.5 75.98,50 88.97,72.5 62.99,72.5 50,95 37.01,72.5 11.03,72.5 24.02,50 11.03,27.5 37.01,27.5"/>
+        <polygon class="magen__in"
+          points="62.99,27.5 75.98,50 62.99,72.5 37.01,72.5 24.02,50 37.01,27.5"/>
+      </svg>
+
+      <h1 class="hero__save">
+        <span class="hero__save-1" data-cfg="saveTheDateL1">Save</span>
+        <span class="hero__save-2" data-cfg="saveTheDateL2">the</span>
+        <span class="hero__save-1" data-cfg="saveTheDateL3">Date</span>
+      </h1>
+
+      <div class="flourish" aria-hidden="true">
+        <svg viewBox="0 0 120 24" preserveAspectRatio="xMidYMid meet">
+          <path d="M60 4c-6 0-10 4-10 8s4 8 10 8 10-4 10-8-4-8-10-8zm0 3c4 0 7 2.4 7 5s-3 5-7 5-7-2.4-7-5 3-5 7-5z"/>
+          <path d="M46 12c-3-4-7-6-11-4M74 12c3-4 7-6 11-4M46 12c-3 4-7 6-11 4M74 12c3 4 7 6 11 4"/>
+        </svg>
+      </div>
+
+      <p class="hero__evento"><span data-cfg="evento">Bar Mitzvá</span></p>
+      <p class="hero__de">de</p>
+      <p class="hero__nombre" data-cfg="nombre">Leivi</p>
+
+      <div class="flourish" aria-hidden="true">
+        <svg viewBox="0 0 120 24" preserveAspectRatio="xMidYMid meet">
+          <path d="M60 4c-6 0-10 4-10 8s4 8 10 8 10-4 10-8-4-8-10-8zm0 3c4 0 7 2.4 7 5s-3 5-7 5-7-2.4-7-5 3-5 7-5z"/>
+          <path d="M46 12c-3-4-7-6-11-4M74 12c3-4 7-6 11-4M46 12c-3 4-7 6-11 4M74 12c3 4 7 6 11 4"/>
+        </svg>
+      </div>
+
+      <p class="hero__fecha" data-cfg="fechaCorta">10 / 12 / 26</p>
+      <div class="dot" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <a class="hero__scroll" href="#contador" aria-label="Bajar">
+    <span></span>
+  </a>
+</header>
+
+<main>
+
+  <!-- ============ CONTADOR ============ -->
+  <section id="contador" class="section section--contador" data-seccion="contador">
+    <div class="wrap reveal">
+      <p class="eyebrow">Faltan</p>
+      <div class="countdown" id="countdown">
+        <div class="countdown__unit"><b id="cd-dias">--</b><span>días</span></div>
+        <div class="countdown__sep">·</div>
+        <div class="countdown__unit"><b id="cd-horas">--</b><span>horas</span></div>
+        <div class="countdown__sep">·</div>
+        <div class="countdown__unit"><b id="cd-min">--</b><span>minutos</span></div>
+        <div class="countdown__sep">·</div>
+        <div class="countdown__unit"><b id="cd-seg">--</b><span>segundos</span></div>
+      </div>
+      <p class="countdown__fecha" data-cfg="fechaLarga">Jueves 10 de diciembre de 2026</p>
+      <a class="btn btn--ghost" id="btn-calendario" href="#">Agendar en mi calendario</a>
+    </div>
+  </section>
+
+  <!-- ============ INVITACIÓN ============ -->
+  <section class="section" data-seccion="invitacion">
+    <div class="wrap wrap--narrow reveal text-center">
+      <h2 class="h-script" data-cfg="invitacion.titulo">Con inmensa alegría</h2>
+      <div class="rule" aria-hidden="true"></div>
+      <div id="invitacion-texto" class="lead"></div>
+      <p class="firma" data-cfg="invitacion.firma"></p>
+    </div>
+  </section>
+
+  <!-- ============ PROGRAMA / LUGAR Y HORARIO ============ -->
+  <section class="section section--alt" data-seccion="programa">
+    <div class="wrap reveal">
+      <p class="eyebrow">El día</p>
+      <h2 class="h-serif">Lugar y horarios</h2>
+      <div class="rule" aria-hidden="true"></div>
+      <div class="programa" id="programa"></div>
+    </div>
+  </section>
+
+  <!-- ============ MAPA ============ -->
+  <section class="section" data-seccion="lugar">
+    <div class="wrap reveal">
+      <p class="eyebrow">Cómo llegar</p>
+      <h2 class="h-serif" data-cfg="lugar.titulo">El lugar</h2>
+      <div class="rule" aria-hidden="true"></div>
+      <p class="lugar__nombre" data-cfg="lugar.nombre"></p>
+      <p class="lugar__dir" data-cfg="lugar.direccion"></p>
+      <p class="lugar__detalle" data-cfg="lugar.detalle"></p>
+      <div class="mapa"><iframe id="mapa-frame" title="Mapa" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+      <a class="btn" id="btn-mapa" href="#" target="_blank" rel="noopener">Abrir en Google Maps</a>
+    </div>
+  </section>
+
+  <!-- ============ GALERÍA ============ -->
+  <section class="section section--alt" data-seccion="galeria">
+    <div class="wrap reveal">
+      <p class="eyebrow" data-cfg="galeria.subtitulo"></p>
+      <h2 class="h-serif" data-cfg="galeria.titulo">Momentos</h2>
+      <div class="rule" aria-hidden="true"></div>
+      <div class="galeria" id="galeria"></div>
+    </div>
+  </section>
+
+  <!-- ============ DRESS CODE ============ -->
+  <section class="section" data-seccion="dressCode">
+    <div class="wrap wrap--narrow reveal text-center">
+      <h2 class="h-serif" data-cfg="dressCode.titulo">Dress code</h2>
+      <div class="rule" aria-hidden="true"></div>
+      <p class="lead" data-cfg="dressCode.texto"></p>
+      <p class="nota" data-cfg="dressCode.nota"></p>
+    </div>
+  </section>
+
+  <!-- ============ RSVP ============ -->
+  <section class="section section--alt" id="rsvp" data-seccion="rsvp">
+    <div class="wrap wrap--narrow reveal">
+      <p class="eyebrow">Te esperamos</p>
+      <h2 class="h-serif" data-cfg="rsvp.titulo">Confirmá tu asistencia</h2>
+      <div class="rule" aria-hidden="true"></div>
+      <p class="lead text-center" data-cfg="rsvp.texto"></p>
+
+      <form id="rsvp-form" class="form" novalidate>
+        <label class="field">
+          <span>Nombre y apellido</span>
+          <input type="text" name="nombre" required autocomplete="name">
+        </label>
+
+        <label class="field">
+          <span>Teléfono o email</span>
+          <input type="text" name="contacto" required autocomplete="tel">
+        </label>
+
+        <fieldset class="field field--radios">
+          <legend>¿Vas a venir?</legend>
+          <label class="radio"><input type="radio" name="asistencia" value="Sí" checked><span>Sí, ahí estaré</span></label>
+          <label class="radio"><input type="radio" name="asistencia" value="No"><span>No voy a poder</span></label>
+        </fieldset>
+
+        <label class="field" id="field-cantidad">
+          <span>¿Cuántos son en total?</span>
+          <input type="number" name="cantidad" min="1" value="1">
+        </label>
+
+        <label class="field">
+          <span>Mensaje (opcional)</span>
+          <textarea name="mensaje" rows="3"></textarea>
+        </label>
+
+        <button class="btn btn--gold" type="submit">Enviar confirmación</button>
+        <p class="form__msg" id="form-msg" role="status"></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- ============ REGALOS ============ -->
+  <section class="section" data-seccion="regalos">
+    <div class="wrap wrap--narrow reveal text-center">
+      <h2 class="h-serif" data-cfg="regalos.titulo">Regalos</h2>
+      <div class="rule" aria-hidden="true"></div>
+      <p class="lead" data-cfg="regalos.texto"></p>
+      <div class="datos-banco" id="datos-banco"></div>
+    </div>
+  </section>
+
+  <!-- ============ HASHTAG ============ -->
+  <section class="section section--alt" data-seccion="hashtag">
+    <div class="wrap wrap--narrow reveal text-center">
+      <h2 class="h-serif" data-cfg="hashtag.titulo">Compartí tus fotos</h2>
+      <div class="rule" aria-hidden="true"></div>
+      <p class="lead" data-cfg="hashtag.texto"></p>
+      <a class="hashtag" id="hashtag-link" href="#" target="_blank" rel="noopener"></a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <svg class="magen magen--sm" viewBox="0 0 100 100" aria-hidden="true">
+    <polygon points="50,10 89.6,78.6 10.4,78.6" /><polygon points="50,90 10.4,21.4 89.6,21.4" />
+  </svg>
+  <p data-cfg="footer">Leivi · 10.12.26</p>
+</footer>
+
+<!-- Lightbox de galería -->
+<div class="lightbox" id="lightbox" hidden>
+  <button class="lightbox__close" aria-label="Cerrar">&times;</button>
+  <button class="lightbox__nav lightbox__nav--prev" aria-label="Anterior">&#8249;</button>
+  <img class="lightbox__img" id="lightbox-img" alt="">
+  <button class="lightbox__nav lightbox__nav--next" aria-label="Siguiente">&#8250;</button>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
