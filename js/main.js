@@ -11,7 +11,7 @@
     }, C);
   }
 
-  /* ---------- Textos simples con data-cfg ---------- */
+  /* ---------- Textos con data-cfg ---------- */
   document.querySelectorAll('[data-cfg]').forEach(function (el) {
     var v = get(el.getAttribute('data-cfg'));
     if (v != null && v !== '') el.textContent = v;
@@ -24,15 +24,118 @@
   /* ---------- Mostrar / ocultar secciones ---------- */
   document.querySelectorAll('[data-seccion]').forEach(function (sec) {
     var nombre = sec.getAttribute('data-seccion');
-    if (nombre === 'invitacion') return;              // siempre visible
     if (C.secciones && C.secciones[nombre] === false) sec.hidden = true;
   });
+
+  /* ============================================================
+     ICONOS — trazo dorado, viewBox 44×44
+     ============================================================ */
+  var ICONOS = {
+    estrella:
+      '<polygon points="22,4 37.59,31 6.41,31" stroke-linejoin="miter"/>' +
+      '<polygon points="22,40 6.41,13 37.59,13" stroke-linejoin="miter"/>',
+
+    copa:
+      '<path d="M14 7h16l-1.6 11.5a6.4 6.4 0 0 1-12.8 0z"/><path d="M22 25v10M15.5 35h13"/>' +
+      '<path d="M16.6 12.5h10.8" stroke-width="1.2" opacity=".7"/>',
+
+    musica:
+      '<path d="M17 31.5V11.5l16-3.5v20"/>' +
+      '<ellipse cx="13.2" cy="32.6" rx="4.6" ry="3.7" transform="rotate(-16 13.2 32.6)"/>' +
+      '<ellipse cx="29.2" cy="29.1" rx="4.6" ry="3.7" transform="rotate(-16 29.2 29.1)"/>' +
+      '<path d="M17 16.5l16-3.5" stroke-width="1.4" opacity=".7"/>' +
+      '<path d="M7 12l1.6 3.4L12 17l-3.4 1.6L7 22l-1.6-3.4L2 17l3.4-1.6z" stroke-width="1.2" opacity=".8"/>' +
+      '<path d="M38.5 33l1.1 2.3 2.4 1.1-2.4 1.1-1.1 2.4-1.1-2.4-2.4-1.1 2.4-1.1z" stroke-width="1.2" opacity=".8"/>',
+
+    calendario:
+      '<rect x="6" y="9" width="32" height="29" rx="3"/>' +
+      '<path d="M6 17h32M15 5v8M29 5v8"/>' +
+      '<path d="M13 24h5M20 24h5M27 24h5M13 31h5M20 31h5" stroke-width="1.3" opacity=".8"/>',
+
+    reloj:
+      '<circle cx="22" cy="24" r="15"/>' +
+      '<path d="M22 15v9l6 4"/>' +
+      '<path d="M11 8L6.5 12M33 8l4.5 4" stroke-width="1.4" opacity=".85"/>',
+
+    pin:
+      '<path d="M22 40s12-11.3 12-19.5A12 12 0 1 0 10 20.5C10 28.7 22 40 22 40z"/>' +
+      '<circle cx="22" cy="20" r="4.6"/>',
+
+    mono:  // moño de traje formal
+      '<path d="M20 19.5L7 12.5c-1.6-.9-3.4.3-3.4 2.1v18.8c0 1.8 1.8 3 3.4 2.1l13-7z"/>' +
+      '<path d="M24 19.5l13-7c1.6-.9 3.4.3 3.4 2.1v18.8c0 1.8-1.8 3-3.4 2.1l-13-7z"/>' +
+      '<rect x="19" y="18" width="6" height="12" rx="2"/>'
+  };
+
+  function svgIcono(clave, clase) {
+    return '<svg class="' + clase + '" viewBox="0 0 44 44" aria-hidden="true">' +
+      (ICONOS[clave] || ICONOS.estrella) + '</svg>';
+  }
+
+  /* ---------- Menú ---------- */
+  var navLinks = document.getElementById('nav-links');
+  if (navLinks && C.menu) {
+    navLinks.innerHTML = C.menu.map(function (m) {
+      return '<a href="' + m.href + '">' + m.texto + '</a>';
+    }).join('');
+  }
+
+  var nav = document.getElementById('nav');
+  var burger = document.getElementById('nav-burger');
+  if (burger && nav) {
+    burger.addEventListener('click', function () {
+      var abierto = nav.classList.toggle('abierto');
+      burger.setAttribute('aria-expanded', abierto ? 'true' : 'false');
+    });
+    navLinks.addEventListener('click', function (e) {
+      if (e.target.tagName === 'A') {
+        nav.classList.remove('abierto');
+        burger.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  // El header se compacta apenas arrancás a bajar
+  if (nav) {
+    var compactar = function () {
+      nav.classList.toggle('compacto', window.scrollY > 40);
+    };
+    window.addEventListener('scroll', compactar, { passive: true });
+    compactar();
+  }
 
   /* ---------- Invitación ---------- */
   var invEl = document.getElementById('invitacion-texto');
   if (invEl && C.invitacion && C.invitacion.texto) {
     invEl.innerHTML = C.invitacion.texto.map(function (p) {
       return '<p>' + p + '</p>';
+    }).join('');
+  }
+
+  /* ---------- Tira de datos ---------- */
+  var datosEl = document.getElementById('datos');
+  if (datosEl && C.datos) {
+    datosEl.innerHTML = C.datos.map(function (d) {
+      return '<div class="dato">' +
+        '<div class="dato__ico">' + svgIcono(d.icono, '') + '</div>' +
+        '<div class="dato__txt"><b>' + d.titulo + '</b>' +
+        '<span>' + d.l1 + '</span>' +
+        (d.l2 ? '<span>' + d.l2 + '</span>' : '') +
+        '</div></div>';
+    }).join('');
+  }
+
+  /* ---------- La celebración ---------- */
+  var progEl = document.getElementById('programa');
+  if (progEl && C.programa) {
+    progEl.innerHTML = C.programa.map(function (p) {
+      return '<article class="tarjeta">' +
+        svgIcono(p.icono, 'tarjeta__ico') +
+        '<h3 class="tarjeta__titulo">' + p.titulo + '</h3>' +
+        '<p class="tarjeta__hora">' + p.hora + '</p>' +
+        '<p class="tarjeta__lugar">' + p.lugar + '</p>' +
+        (p.detalle ? '<p class="tarjeta__detalle">' + p.detalle + '</p>' : '') +
+        '</article>';
     }).join('');
   }
 
@@ -52,7 +155,7 @@
     var ms = fecha - new Date();
     if (ms <= 0) {
       var cd = document.getElementById('countdown');
-      if (cd) cd.innerHTML = '<p class="h-script" style="margin:0">¡Llegó el gran día!</p>';
+      if (cd) cd.innerHTML = '<p class="hero__fecha" style="margin:0">¡Llegó el gran día!</p>';
       clearInterval(timer);
       return;
     }
@@ -66,14 +169,13 @@
   tick();
 
   /* ---------- Agendar en el calendario (.ics) ---------- */
-  var btnCal = document.getElementById('btn-calendario');
-  if (btnCal) {
+  var ics = (function () {
     var fin = new Date(fecha.getTime() + 5 * 3600 * 1000);
     var fmt = function (d) {
       return d.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
     };
     var lugarTxt = [get('lugar.nombre'), get('lugar.direccion')].filter(Boolean).join(', ');
-    var ics = [
+    return [
       'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//barmitzva//ES',
       'BEGIN:VEVENT',
       'UID:' + Date.now() + '@barmitzva',
@@ -84,39 +186,14 @@
       'LOCATION:' + lugarTxt,
       'END:VEVENT', 'END:VCALENDAR'
     ].join('\r\n');
-    btnCal.href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics);
-    btnCal.setAttribute('download', C.nombre.toLowerCase() + '.ics');
-  }
+  })();
 
-  /* ---------- Programa ---------- */
-  var ICONOS = {
-    torah: '<path d="M15 11h14v22H15z"/><path d="M12 8.5v27M32 8.5v27"/>' +
-           '<ellipse cx="12" cy="7" rx="3.6" ry="2"/><ellipse cx="12" cy="37" rx="3.6" ry="2"/>' +
-           '<ellipse cx="32" cy="7" rx="3.6" ry="2"/><ellipse cx="32" cy="37" rx="3.6" ry="2"/>' +
-           '<path d="M18.5 17h7M18.5 21h7M18.5 25h7M18.5 29h5" stroke-width="1.2" opacity=".75"/>',
-    copa: '<path d="M14 7h16l-1.6 11.5a6.4 6.4 0 0 1-12.8 0z"/><path d="M22 25v10M15.5 35h13"/>' +
-          '<path d="M16.6 12.5h10.8" stroke-width="1.2" opacity=".7"/>',
-    estrella: '<polygon points="22,4 37.59,31 6.41,31" stroke-linejoin="miter"/>' +
-              '<polygon points="22,40 6.41,13 37.59,13" stroke-linejoin="miter"/>',
-    musica: '<path d="M17 31.5V11.5l16-3.5v20"/>' +
-            '<ellipse cx="13.2" cy="32.6" rx="4.6" ry="3.7" transform="rotate(-16 13.2 32.6)"/>' +
-            '<ellipse cx="29.2" cy="29.1" rx="4.6" ry="3.7" transform="rotate(-16 29.2 29.1)"/>' +
-            '<path d="M17 16.5l16-3.5" stroke-width="1.4" opacity=".7"/>' +
-            '<path d="M7 12l1.6 3.4L12 17l-3.4 1.6L7 22l-1.6-3.4L2 17l3.4-1.6z" stroke-width="1.2" opacity=".8"/>' +
-            '<path d="M38.5 33l1.1 2.3 2.4 1.1-2.4 1.1-1.1 2.4-1.1-2.4-2.4-1.1 2.4-1.1z" stroke-width="1.2" opacity=".8"/>'
-  };
-  var progEl = document.getElementById('programa');
-  if (progEl && C.programa) {
-    progEl.innerHTML = C.programa.map(function (p) {
-      return '<article class="card">' +
-        '<svg class="card__icon" viewBox="0 0 44 44" aria-hidden="true">' + (ICONOS[p.icono] || ICONOS.estrella) + '</svg>' +
-        '<h3 class="card__titulo">' + p.titulo + '</h3>' +
-        '<p class="card__hora">' + p.hora + '</p>' +
-        '<p class="card__lugar">' + p.lugar + '</p>' +
-        (p.detalle ? '<p class="card__detalle">' + p.detalle + '</p>' : '') +
-        '</article>';
-    }).join('');
-  }
+  ['btn-calendario', 'nav-agendar'].forEach(function (id) {
+    var b = document.getElementById(id);
+    if (!b) return;
+    b.href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics);
+    b.setAttribute('download', C.nombre.toLowerCase() + '.ics');
+  });
 
   /* ---------- Mapa ---------- */
   var frame = document.getElementById('mapa-frame');
@@ -155,7 +232,7 @@
       var b = e.target.closest('button[data-i]');
       if (b) abrir(+b.dataset.i);
     });
-    lb.querySelector('.lightbox__close').addEventListener('click', cerrar);
+    lb.querySelector('.lightbox__cerrar').addEventListener('click', cerrar);
     lb.querySelector('.lightbox__nav--prev').addEventListener('click', function () { abrir(idx - 1); });
     lb.querySelector('.lightbox__nav--next').addEventListener('click', function () { abrir(idx + 1); });
     lb.addEventListener('click', function (e) { if (e.target === lb) cerrar(); });
@@ -168,7 +245,7 @@
   }
 
   /* ---------- Regalos ---------- */
-  var banco = document.getElementById('datos-banco');
+  var banco = document.getElementById('banco');
   if (banco && C.regalos) {
     var filas = [
       ['Alias', C.regalos.alias],
@@ -176,7 +253,7 @@
       ['Titular', C.regalos.titular]
     ].filter(function (f) { return f[1]; });
     banco.innerHTML = filas.map(function (f) {
-      return '<div><b>' + f[0] + '</b><br>' + f[1] + '</div>';
+      return '<div><b>' + f[0] + '</b>' + f[1] + '</div>';
     }).join('');
   }
 
@@ -190,14 +267,12 @@
   /* ---------- RSVP ---------- */
   var form = document.getElementById('rsvp-form');
   var msg = document.getElementById('form-msg');
-  var campoCant = document.getElementById('field-cantidad');
+  var campoCant = document.getElementById('campo-cantidad');
 
   if (form) {
     var maxAc = get('rsvp.maxAcompanantes');
-    var inputCant = form.elements.cantidad;
-    if (maxAc && inputCant) inputCant.max = maxAc;
+    if (maxAc && form.elements.cantidad) form.elements.cantidad.max = maxAc;
 
-    // Si dice que no viene, se esconde "cuántos son"
     form.querySelectorAll('input[name=asistencia]').forEach(function (r) {
       r.addEventListener('change', function () {
         if (campoCant) campoCant.hidden = (form.elements.asistencia.value === 'No');
@@ -226,10 +301,8 @@
       var btn = form.querySelector('button[type=submit]');
       var endpoint = get('rsvp.endpoint');
 
-      // Opción B: guardar en Google Sheets
       if (endpoint) {
         btn.disabled = true;
-        btn.textContent = 'Enviando…';
         fetch(endpoint, {
           method: 'POST',
           mode: 'no-cors',
@@ -244,12 +317,10 @@
           msg.textContent = 'No pudimos enviarlo. Probá de nuevo en un momento.';
         }).finally(function () {
           btn.disabled = false;
-          btn.textContent = 'Enviar confirmación';
         });
         return;
       }
 
-      // Opción A (por defecto): abrir WhatsApp con el mensaje armado
       var texto =
         '*' + C.evento + ' de ' + C.nombre + '*\n' +
         'Nombre: ' + datos.nombre + '\n' +
@@ -264,6 +335,29 @@
     });
   }
 
+  /* ---------- Partículas doradas ---------- */
+  var cont = document.getElementById('particulas');
+  var animaOk = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (cont && animaOk) {
+    var cantidad = window.innerWidth < 700 ? 16 : 30;
+    var html = '';
+    for (var i = 0; i < cantidad; i++) {
+      var tam = (Math.random() * 2.2 + 0.8).toFixed(1);
+      var dur = (Math.random() * 22 + 26).toFixed(0);
+      var delay = (Math.random() * -40).toFixed(0);
+      var op = (Math.random() * 0.4 + 0.14).toFixed(2);
+      var dx = (Math.random() * 90 - 45).toFixed(0);
+      html += '<span class="particula" style="' +
+        'left:' + (Math.random() * 100).toFixed(1) + '%;' +
+        'top:' + (100 + Math.random() * 25).toFixed(0) + '%;' +
+        'width:' + tam + 'px;height:' + tam + 'px;' +
+        '--op:' + op + ';--dx:' + dx + 'px;' +
+        'animation-duration:' + dur + 's;animation-delay:' + delay + 's;' +
+        '"></span>';
+    }
+    cont.innerHTML = html;
+  }
+
   /* ---------- Aparición al scrollear ---------- */
   var obs = new IntersectionObserver(function (entradas) {
     entradas.forEach(function (en) {
@@ -272,7 +366,24 @@
         obs.unobserve(en.target);
       }
     });
-  }, { threshold: 0.12 });
+  }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
   document.querySelectorAll('.reveal').forEach(function (el) { obs.observe(el); });
+
+  /* ---------- Marcar el link activo del menú ---------- */
+  var secciones = ['top', 'celebracion', 'lugar', 'rsvp', 'fotos']
+    .map(function (id) { return document.getElementById(id); })
+    .filter(Boolean);
+
+  if (secciones.length && navLinks) {
+    var obsNav = new IntersectionObserver(function (entradas) {
+      entradas.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        navLinks.querySelectorAll('a').forEach(function (a) {
+          a.classList.toggle('activo', a.getAttribute('href') === '#' + en.target.id);
+        });
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    secciones.forEach(function (s) { obsNav.observe(s); });
+  }
 
 })();

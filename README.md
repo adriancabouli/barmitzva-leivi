@@ -60,3 +60,26 @@ Y abrí http://localhost:4173
 - **Cormorant Garamond** — textos
 
 Se cargan desde Google Fonts, no hay que instalar nada.
+
+---
+
+## Regla de trabajo: siempre pushear
+
+**Todo cambio se hace local Y se pushea a `origin/main` en el mismo momento.** No se acumulan cambios sin subir.
+
+Después de cada tanda de ediciones:
+
+```bash
+git add -A && git commit -m "descripción" && git push origin main
+```
+
+El sitio publicado se actualiza solo desde `main`: https://adriancabouli.github.io/barmitzva-leivi/
+
+## Backups
+
+Antes de un rediseño grande se guarda una copia:
+
+- `base-v1` — tag y rama en git con la primera versión (marco doble, hero "SAVE / THE / DATE" en tres renglones).
+- `../barmitzvah-BACKUP-v1/` — copia de la carpeta, sin `.git`.
+
+Para volver a una versión guardada: `git checkout base-v1`

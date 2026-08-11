@@ -8,12 +8,11 @@ window.CONFIG = {
   /* ---------- QUÉ SECCIONES SE MUESTRAN ----------
      Poné true / false para prender o apagar cada bloque.       */
   secciones: {
-    contador:  true,   // días que faltan
-    programa:  true,   // lugar y horarios
+    datos:     true,   // tira de fecha / horario / lugar / dress code
+    programa:  true,   // la celebración: ceremonia, recepción, fiesta
     lugar:     true,   // mapa
+    galeria:   true,   // fotos (ahora DEMO, reemplazar por las de Leivi)
     rsvp:      true,   // confirmar asistencia
-    galeria:   true,   // fotos (ahora con imágenes DEMO, reemplazar por las de Leivi)
-    dressCode: false,
     regalos:   false,
     hashtag:   false
   },
@@ -21,19 +20,31 @@ window.CONFIG = {
   /* ---------- DATOS PRINCIPALES ---------- */
   nombre: "Leivi",
   evento: "Bar Mitzvá",          // cambiar a "Bat Mitzvá" si corresponde
-  // El "Save the Date" del hero, en 3 renglones (como el arte original)
-  saveTheDateL1: "Save",
-  saveTheDateL2: "the",
-  saveTheDateL3: "Date",
+  saveTheDate: "Save the Date",
 
-  // Fecha y hora del evento (formato ISO con huso horario de Argentina)
-  fechaISO: "2026-12-10T20:00:00-03:00",
-  fechaCorta: "10 / 12 / 26",
+  // Fecha y hora del evento (ISO, huso horario de Argentina)
+  fechaISO: "2026-12-10T19:00:00-03:00",
+  fechaPunteada: "10 · 12 · 2026",
   fechaLarga: "Jueves 10 de diciembre de 2026",
 
-  // Título de la pestaña del navegador y compartido en WhatsApp
   tituloPagina: "Bar Mitzvá de Leivi · 10.12.26",
-  descripcionPagina: "Queremos que seas parte de este día tan especial. Confirmá tu asistencia.",
+  descripcionPagina: "Queremos que seas parte de este día tan especial.",
+
+  /* ---------- MENÚ ---------- */
+  menu: [
+    { texto: "Home",           href: "#top" },
+    { texto: "La celebración", href: "#celebracion" },
+    { texto: "Detalles",       href: "#lugar" },
+    { texto: "Confirmación",   href: "#rsvp" },
+    { texto: "Galería",        href: "#fotos" }
+  ],
+
+  /* ---------- HERO ---------- */
+  hero: {
+    faltan: "Faltan",
+    cta: "Agendar en mi calendario",
+    ctaCorto: "Agendar"
+  },
 
   /* ---------- INVITACIÓN ---------- */
   invitacion: {
@@ -45,7 +56,15 @@ window.CONFIG = {
     firma: "Su familia"
   },
 
-  /* ---------- PROGRAMA ---------- */
+  /* ---------- TIRA DE DATOS ---------- */
+  datos: [
+    { icono: "calendario", titulo: "Fecha",      l1: "Jueves 10 de diciembre", l2: "de 2026" },
+    { icono: "reloj",      titulo: "Horario",    l1: "19:00 hs",               l2: "Puntual" },
+    { icono: "pin",        titulo: "Lugar",      l1: "Jabad Lubavitch",        l2: "Córdoba" },
+    { icono: "mono",       titulo: "Dress code", l1: "Traje formal",           l2: "Elegante" }
+  ],
+
+  /* ---------- LA CELEBRACIÓN ---------- */
   programa: [
     {
       icono: "estrella",
@@ -76,19 +95,12 @@ window.CONFIG = {
     nombre: "Jabad Lubavitch Córdoba",
     direccion: "Sucre 1378/80, Barrio Cofico, Córdoba",
     detalle: "",
+    // En Google Maps: Compartir → Insertar un mapa → copiar el src del iframe
     mapaEmbed: "https://www.google.com/maps?q=Sucre+1378,+Barrio+Cofico,+X5000+C%C3%B3rdoba,+Argentina&output=embed",
     mapaLink: "https://maps.google.com/?q=Jabad+Lubavitch+Cordoba,+Sucre+1378,+Barrio+Cofico,+Cordoba"
   },
 
-  /* ---------- DRESS CODE ---------- */
-  dressCode: {
-    titulo: "Dress code",
-    texto: "Elegante. Los caballeros, por favor, con kipá (habrá disponibles en la entrada).",
-    nota: "Sugerencia de color: verde, dorado o tonos neutros."
-  },
-
   /* ---------- GALERÍA ---------- */
-  // Poné las fotos en la carpeta img/galeria/ y listalas acá.
   galeria: {
     titulo: "Momentos",
     subtitulo: "Un poco de nuestra historia hasta acá",
@@ -107,28 +119,25 @@ window.CONFIG = {
   regalos: {
     titulo: "Regalos",
     texto: "Tu presencia es el mejor regalo. Si querés hacernos un obsequio, podés dejarlo en el sobre el día del evento.",
-    // Dejar en null para no mostrar los datos bancarios
     alias: null,      // ej: "leivi.barmitzva"
-    cbu: null,        // ej: "0000003100010000000001"
-    titular: null     // ej: "Nombre Apellido"
+    cbu: null,
+    titular: null
   },
 
-  /* ---------- CONFIRMACIÓN DE ASISTENCIA (RSVP) ---------- */
+  /* ---------- CONFIRMACIÓN DE ASISTENCIA ---------- */
   rsvp: {
     titulo: "Confirmá tu asistencia",
     texto: "Te pedimos confirmar antes del 10 de noviembre.",
-    fechaLimite: "10 de noviembre de 2026",
     maxAcompanantes: 6,
 
     // Opción A (por defecto): las confirmaciones llegan por WhatsApp.
-    whatsapp: "5491100000000",   // código país + área + número, sin + ni espacios
+    whatsapp: "5491100000000",   // país + área + número, sin + ni espacios
 
-    // Opción B: Google Sheets. Pegá acá la URL del Apps Script (ver README)
-    // y las respuestas se guardan solas en una planilla. Si está en null, usa WhatsApp.
+    // Opción B: Google Sheets. Si tiene URL, se usa en lugar de WhatsApp.
     endpoint: null
   },
 
-  /* ---------- HASHTAG / REDES ---------- */
+  /* ---------- HASHTAG ---------- */
   hashtag: {
     titulo: "Compartí tus fotos",
     texto: "Subí tus fotos y videos de la noche con el hashtag",
@@ -136,6 +145,5 @@ window.CONFIG = {
     instagram: "https://www.instagram.com/explore/tags/barmitzvadeleivi/"
   },
 
-  /* ---------- PIE ---------- */
   footer: "Leivi · 10.12.26"
 };
