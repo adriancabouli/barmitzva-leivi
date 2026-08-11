@@ -35,6 +35,8 @@
 
   --max:1280px;
   --marco:25px;                     /* separación del filete al borde */
+  --nav:92px;                       /* alto real del header, lo mide main.js */
+  --aire:clamp(24px,5vh,64px);      /* aire igual arriba y abajo del hero */
   --barra:190px;                    /* alto real de la barra flotante, lo mide main.js */
 }
 
@@ -323,7 +325,7 @@ p{margin:0 0 1em}
   display:flex;align-items:center;justify-content:center;
   /* Medido para que la portada entre completa —botón incluido— en
      pantallas de portátil de ~860px de alto. */
-  padding:clamp(150px,19vh,240px) 7vw calc(var(--barra, 190px) + clamp(18px,2.6vh,34px));
+  padding:calc(var(--nav, 92px) + var(--aire)) 7vw calc(var(--barra, 0px) + var(--aire));
   text-align:center;
 }
 .hero__inner{width:min(760px,100%)}

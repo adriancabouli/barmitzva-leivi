@@ -180,7 +180,11 @@
 
   /* ---------- Agendar en el calendario (.ics) ---------- */
   var ics = (function () {
-    var fin = new Date(fecha.getTime() + 5 * 3600 * 1000);
+    // La ceremonia es a la mañana. Para los invitados a la fiesta el
+    // evento del calendario abarca todo el día; para el resto, 3 horas.
+    var fin = conFiesta
+      ? new Date(fecha.getTime() + 14 * 3600 * 1000)
+      : new Date(fecha.getTime() + 3 * 3600 * 1000);
     var fmt = function (d) {
       return d.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
     };
@@ -349,16 +353,23 @@
      El hero reserva justo ese espacio, así el botón nunca queda
      tapado sea cual sea el alto de pantalla.                     */
   var barra = document.querySelector('.capitulo--datos');
-  if (barra) {
-    var medirBarra = function () {
-      var fija = getComputedStyle(barra).position === 'fixed';
-      document.documentElement.style.setProperty(
-        '--barra', fija ? barra.offsetHeight + 'px' : '0px');
+  var navEl = document.getElementById('nav');
+  if (barra || navEl) {
+    var medir = function () {
+      var raiz = document.documentElement.style;
+      if (barra) {
+        var fija = getComputedStyle(barra).position === 'fixed';
+        // Cuánto ocupa desde el borde inferior de la pantalla: no alcanza
+        // con su alto, también cuenta lo que está separada del fondo.
+        var ocupa = window.innerHeight - barra.getBoundingClientRect().top;
+        raiz.setProperty('--barra', fija ? Math.round(ocupa) + 'px' : '0px');
+      }
+      if (navEl) raiz.setProperty('--nav', navEl.offsetHeight + 'px');
     };
-    window.addEventListener('resize', medirBarra);
-    medirBarra();
+    window.addEventListener('resize', medir);
+    medir();
     // Las fuentes cambian el alto al cargar: volvemos a medir
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(medirBarra);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(medir);
   }
 
   /* ---------- Partículas doradas ---------- */
