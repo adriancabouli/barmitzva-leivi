@@ -709,14 +709,18 @@ p{margin:0 0 1em}
    LIGHTBOX
    ============================================================ */
 .lightbox{
-  position:fixed;inset:0;z-index:120;
+  position:fixed;inset:0;z-index:2000;
   background:rgba(2,12,8,.98);
   -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
   display:flex;align-items:center;justify-content:center;
 }
 .lightbox[hidden]{display:none}
+/* Con el visor abierto, la barra de datos y el header estorban */
+body.visor-abierto .capitulo--datos,
+body.visor-abierto .nav{opacity:0;pointer-events:none;transition:opacity .3s ease}
 .lightbox__img{
-  max-width:88vw;max-height:84vh;object-fit:contain;
+  max-width:min(88vw,1100px);max-height:88svh;object-fit:contain;
+  width:auto;height:auto;
   border:1px solid rgba(224,169,63,.5);border-radius:8px;
   box-shadow:0 30px 90px rgba(0,0,0,.8);
 }

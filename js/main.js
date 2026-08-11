@@ -243,10 +243,12 @@
     lbImg.alt = fotos[idx].alt;
     lb.hidden = false;
     document.body.style.overflow = 'hidden';
+    document.body.classList.add('visor-abierto');
   }
   function cerrar() {
     lb.hidden = true;
     document.body.style.overflow = '';
+    document.body.classList.remove('visor-abierto');
   }
 
   if (galEl && lb) {
