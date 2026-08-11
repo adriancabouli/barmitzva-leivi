@@ -43,7 +43,9 @@ En Google Maps: **Compartir → Insertar un mapa**, copiá el `src` del iframe y
 
 Por defecto llegan **por WhatsApp**: poné tu número en `rsvp.whatsapp` (país + área + número, sin `+` ni espacios).
 
-Si preferís que se guarden en una planilla, creá un Google Apps Script que escriba en un Sheet, publicalo como app web con acceso "Cualquiera" y pegá la URL en `rsvp.endpoint`. Cuando ese campo tiene un valor, se usa en lugar de WhatsApp.
+Si preferís que se guarden en una **planilla de Google** (recomendado con muchos invitados: te da la lista ordenada y los totales sumados), seguí el paso a paso de [docs/README-planilla.md](docs/README-planilla.md). Son ~10 minutos y el script ya está escrito en [docs/planilla-confirmaciones.gs](docs/planilla-confirmaciones.gs).
+
+Cuando `rsvp.endpoint` tiene una URL, se usa la planilla en lugar de WhatsApp.
 
 ## Ver el sitio localmente
 
