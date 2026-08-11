@@ -63,6 +63,29 @@ Se cargan desde Google Fonts, no hay que instalar nada.
 
 ---
 
+## Dos versiones de la invitación
+
+El mismo sitio sirve para los dos grupos de invitados. Cambia **sólo la sección "La celebración"**:
+
+| A quién se lo mandás | Link | Qué muestra |
+|---|---|---|
+| Invitados a la ceremonia | `https://adriancabouli.github.io/barmitzva-leivi/` | Sólo la ceremonia |
+| Invitados a ceremonia y fiesta | `https://adriancabouli.github.io/barmitzva-leivi/?fiesta` | Ceremonia, recepción y fiesta |
+
+Los horarios de cada versión se editan en `js/config.js`, en `programa.ceremonia` y `programa.completa`.
+
+## Las fotos de Leivi
+
+Las de ahora son de muestra. Para poner las reales:
+
+1. Guardá las fotos en `img/galeria/` (por ejemplo `foto-1.jpg`, `foto-2.jpg`, …).
+2. En `js/config.js`, cambiá cada `src` de `galeria.fotos` por el nombre real.
+3. Commit y push.
+
+Conviene achicarlas a ~1200px de ancho antes de subirlas, así el sitio carga rápido en el celular.
+
+---
+
 ## Regla de trabajo: siempre pushear
 
 **Todo cambio se hace local Y se pushea a `origin/main` en el mismo momento.** No se acumulan cambios sin subir.

@@ -64,30 +64,53 @@ window.CONFIG = {
     { icono: "mono",       titulo: "Dress code", l1: "Traje formal",           l2: "Elegante" }
   ],
 
-  /* ---------- LA CELEBRACIÓN ---------- */
-  programa: [
-    {
-      icono: "estrella",
-      titulo: "Ceremonia",
-      hora: "19:00 hs",
-      lugar: "Jabad Lubavitch Córdoba",
-      detalle: "Lectura de la Torá y bendiciones."
-    },
-    {
-      icono: "copa",
-      titulo: "Recepción",
-      hora: "20:30 hs",
-      lugar: "Salón (completar)",
-      detalle: "Cóctel de bienvenida."
-    },
-    {
-      icono: "musica",
-      titulo: "Fiesta",
-      hora: "21:30 hs",
-      lugar: "Salón (completar)",
-      detalle: "Cena, música y baile hasta el final."
-    }
-  ],
+  /* ---------- LA CELEBRACIÓN ----------
+     Hay DOS versiones de la invitación:
+
+       ceremonia  →  la URL normal del sitio
+       completa   →  la misma URL con  ?fiesta  al final
+
+     Los invitados que van sólo a la ceremonia reciben el link corto;
+     los que van también a la fiesta, el link con ?fiesta.
+     Ver el README para los dos links listos para mandar.           */
+  programa: {
+
+    // Para los invitados a la ceremonia solamente
+    ceremonia: [
+      {
+        icono: "estrella",
+        titulo: "Ceremonia",
+        hora: "19:00 hs",
+        lugar: "Jabad Lubavitch Córdoba",
+        detalle: "Lectura de la Torá y bendiciones."
+      }
+    ],
+
+    // Para los invitados a la ceremonia y a la fiesta
+    completa: [
+      {
+        icono: "estrella",
+        titulo: "Ceremonia",
+        hora: "19:00 hs",
+        lugar: "Jabad Lubavitch Córdoba",
+        detalle: "Lectura de la Torá y bendiciones."
+      },
+      {
+        icono: "copa",
+        titulo: "Recepción",
+        hora: "20:30 hs",
+        lugar: "Salón (completar)",
+        detalle: "Cóctel de bienvenida."
+      },
+      {
+        icono: "musica",
+        titulo: "Fiesta",
+        hora: "21:30 hs",
+        lugar: "Salón (completar)",
+        detalle: "Cena, música y baile hasta el final."
+      }
+    ]
+  },
 
   /* ---------- LUGAR ---------- */
   lugar: {

@@ -125,10 +125,20 @@
     }).join('');
   }
 
-  /* ---------- La celebración ---------- */
+  /* ---------- La celebración ----------
+     Dos versiones de la invitación: la URL normal muestra sólo la
+     ceremonia; con ?fiesta al final muestra todo el programa.      */
+  var conFiesta = /(\?|&)fiesta\b/.test(location.search);
+  document.body.dataset.version = conFiesta ? 'completa' : 'ceremonia';
+
   var progEl = document.getElementById('programa');
-  if (progEl && C.programa) {
-    progEl.innerHTML = C.programa.map(function (p) {
+  var listaPrograma = C.programa
+    ? (conFiesta ? C.programa.completa : C.programa.ceremonia)
+    : null;
+
+  if (progEl && listaPrograma) {
+    progEl.classList.toggle('programa--uno', listaPrograma.length === 1);
+    progEl.innerHTML = listaPrograma.map(function (p) {
       return '<article class="tarjeta">' +
         svgIcono(p.icono, 'tarjeta__ico') +
         '<h3 class="tarjeta__titulo">' + p.titulo + '</h3>' +
