@@ -82,7 +82,7 @@ window.CONFIG = {
         titulo: "Ceremonia",
         hora: "09:00 hs",
         lugar: "Jabad Lubavitch Córdoba",
-        detalle: "Lectura de la Torá y bendiciones."
+        detalle: "Colocación de tefilín y lectura de la Torá."
       }
     ],
 
@@ -93,7 +93,7 @@ window.CONFIG = {
         titulo: "Ceremonia",
         hora: "09:00 hs",
         lugar: "Jabad Lubavitch Córdoba",
-        detalle: "Lectura de la Torá y bendiciones."
+        detalle: "Colocación de tefilín y lectura de la Torá."
       },
       {
         icono: "copa",
