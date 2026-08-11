@@ -34,7 +34,7 @@ window.CONFIG = {
   menu: [
     { texto: "Home",           href: "#top" },
     { texto: "La celebración", href: "#celebracion" },
-    { texto: "Detalles",       href: "#lugar" },
+    { texto: "El lugar",       href: "#lugar" },
     { texto: "Confirmación",   href: "#rsvp" },
     { texto: "Galería",        href: "#fotos" }
   ],
