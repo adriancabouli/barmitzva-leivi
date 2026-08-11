@@ -48,10 +48,10 @@ window.CONFIG = {
   /* ---------- PROGRAMA ---------- */
   programa: [
     {
-      icono: "torah",
+      icono: "estrella",
       titulo: "Ceremonia",
       hora: "19:00 hs",
-      lugar: "Templo (completar)",
+      lugar: "Jabad Lubavitch Córdoba",
       detalle: "Lectura de la Torá y bendiciones."
     },
     {
@@ -62,7 +62,7 @@ window.CONFIG = {
       detalle: "Cóctel de bienvenida."
     },
     {
-      icono: "estrella",
+      icono: "musica",
       titulo: "Fiesta",
       hora: "21:30 hs",
       lugar: "Salón (completar)",
@@ -73,13 +73,11 @@ window.CONFIG = {
   /* ---------- LUGAR ---------- */
   lugar: {
     titulo: "El lugar",
-    nombre: "Nombre del salón",
-    direccion: "Dirección completa, Ciudad",
-    detalle: "Estacionamiento disponible en el predio.",
-    // Pegá acá el link "Insertar un mapa" de Google Maps (el src del iframe)
-    mapaEmbed: "https://www.google.com/maps?q=Buenos+Aires,+Argentina&output=embed",
-    // Link para abrir en la app de mapas
-    mapaLink: "https://maps.google.com/?q=Buenos+Aires,+Argentina"
+    nombre: "Jabad Lubavitch Córdoba",
+    direccion: "Sucre 1378/80, Barrio Cofico, Córdoba",
+    detalle: "",
+    mapaEmbed: "https://www.google.com/maps?q=Sucre+1378,+Barrio+Cofico,+X5000+C%C3%B3rdoba,+Argentina&output=embed",
+    mapaLink: "https://maps.google.com/?q=Jabad+Lubavitch+Cordoba,+Sucre+1378,+Barrio+Cofico,+Cordoba"
   },
 
   /* ---------- DRESS CODE ---------- */

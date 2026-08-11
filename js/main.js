@@ -90,9 +90,20 @@
 
   /* ---------- Programa ---------- */
   var ICONOS = {
-    torah: '<path d="M8 6h28v30H8z"/><path d="M14 6v30M30 6v30"/><circle cx="8" cy="21" r="4"/><circle cx="36" cy="21" r="4"/>',
-    copa: '<path d="M13 6h18l-2 12a7 7 0 0 1-14 0z"/><path d="M22 25v11M15 36h14"/>',
-    estrella: '<polygon points="22,5 35,39 9,39"/><polygon points="22,39 9,5 35,5"/>'
+    torah: '<path d="M15 11h14v22H15z"/><path d="M12 8.5v27M32 8.5v27"/>' +
+           '<ellipse cx="12" cy="7" rx="3.6" ry="2"/><ellipse cx="12" cy="37" rx="3.6" ry="2"/>' +
+           '<ellipse cx="32" cy="7" rx="3.6" ry="2"/><ellipse cx="32" cy="37" rx="3.6" ry="2"/>' +
+           '<path d="M18.5 17h7M18.5 21h7M18.5 25h7M18.5 29h5" stroke-width="1.2" opacity=".75"/>',
+    copa: '<path d="M14 7h16l-1.6 11.5a6.4 6.4 0 0 1-12.8 0z"/><path d="M22 25v10M15.5 35h13"/>' +
+          '<path d="M16.6 12.5h10.8" stroke-width="1.2" opacity=".7"/>',
+    estrella: '<polygon points="22,4 37.59,31 6.41,31" stroke-linejoin="miter"/>' +
+              '<polygon points="22,40 6.41,13 37.59,13" stroke-linejoin="miter"/>',
+    musica: '<path d="M17 31.5V11.5l16-3.5v20"/>' +
+            '<ellipse cx="13.2" cy="32.6" rx="4.6" ry="3.7" transform="rotate(-16 13.2 32.6)"/>' +
+            '<ellipse cx="29.2" cy="29.1" rx="4.6" ry="3.7" transform="rotate(-16 29.2 29.1)"/>' +
+            '<path d="M17 16.5l16-3.5" stroke-width="1.4" opacity=".7"/>' +
+            '<path d="M7 12l1.6 3.4L12 17l-3.4 1.6L7 22l-1.6-3.4L2 17l3.4-1.6z" stroke-width="1.2" opacity=".8"/>' +
+            '<path d="M38.5 33l1.1 2.3 2.4 1.1-2.4 1.1-1.1 2.4-1.1-2.4-2.4-1.1 2.4-1.1z" stroke-width="1.2" opacity=".8"/>'
   };
   var progEl = document.getElementById('programa');
   if (progEl && C.programa) {

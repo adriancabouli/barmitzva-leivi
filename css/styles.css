@@ -64,8 +64,10 @@ main,header,footer{position:relative;z-index:1}
 /* ============================================================
    TIPOGRAFÍA DORADA
    ============================================================ */
+/* Degradé dorado SOLO en tipografía grande. En textos chicos el degradé
+   baja el contraste y lee gris sucio en vez de oro: esos van en plano. */
 .oro,.hero__save span,.hero__nombre,.hero__fecha,.hero__evento,.hero__de,
-.h-serif,.h-script,.countdown b,.eyebrow{
+.h-serif,.h-script,.countdown b{
   background:var(--oro-grad);
   -webkit-background-clip:text;background-clip:text;
   color:transparent;
@@ -76,6 +78,7 @@ main,header,footer{position:relative;z-index:1}
   font-family:var(--f-serif);
   font-size:.72rem;letter-spacing:.42em;text-transform:uppercase;
   text-align:center;margin:0 0 .8em;
+  color:var(--oro-500);
 }
 .h-serif{
   font-family:var(--f-serif);
@@ -83,10 +86,13 @@ main,header,footer{position:relative;z-index:1}
   letter-spacing:.14em;text-transform:uppercase;text-align:center;
   line-height:1.25;
 }
+/* line-height y padding generosos: el texto con degradé se recorta
+   al content-box y si no, se comen los descendentes (g, y, j). */
 .h-script{
   font-family:var(--f-script);
-  font-size:clamp(2.6rem,8vw,4.2rem);
-  line-height:1.1;text-align:center;
+  font-size:clamp(2.4rem,7vw,3.9rem);
+  line-height:1.45;text-align:center;
+  padding-bottom:.14em;
 }
 .lead{font-size:1.12rem;color:var(--crema-tenue);text-align:center}
 .nota{font-size:.95rem;color:var(--crema-tenue);font-style:italic;text-align:center}
@@ -111,38 +117,39 @@ main,header,footer{position:relative;z-index:1}
 .hero{
   min-height:100svh;
   display:flex;align-items:center;justify-content:center;
-  padding:clamp(18px,4vw,40px);
+  /* el padding de abajo deja aire entre el marco y la flecha */
+  padding:clamp(20px,4vw,40px) clamp(18px,4vw,40px) clamp(74px,10vh,110px);
   background:
     radial-gradient(120% 90% at 50% 20%, var(--verde-700) 0%, var(--verde-800) 55%, var(--verde-900) 100%);
   position:relative;overflow:hidden;
 }
 
-/* Ornamentos dorados en las esquinas del marco */
-.corner{
-  position:absolute;width:clamp(38px,7vmin,64px);aspect-ratio:1;
-  color:var(--oro-500);pointer-events:none;overflow:visible;
-}
-.corner--tl{top:-1px;left:-1px}
-.corner--tr{top:-1px;right:-1px;transform:scaleX(-1)}
-.corner--bl{bottom:-1px;left:-1px;transform:scaleY(-1)}
-.corner--br{bottom:-1px;right:-1px;transform:scale(-1)}
 
-/* Marco dorado con esquinas curvas alternadas (como el arte) */
+/* Marco dorado doble.
+   Las dos líneas son concéntricas: el radio interior se deriva del
+   exterior menos la separación, así quedan paralelas también en las
+   esquinas (si no, se ven torcidas). */
 .frame{
+  --r:clamp(20px,4vmin,38px);   /* radio del marco exterior */
+  --gap:11px;                   /* separación entre las dos líneas */
   position:relative;
   width:min(700px,100%);
-  padding:clamp(34px,6vw,60px) clamp(22px,5vw,52px);
+  padding:clamp(34px,6vw,58px) clamp(24px,5vw,54px);
   text-align:center;
 }
 .frame::before,.frame::after{
   content:"";position:absolute;pointer-events:none;
-  border:1.5px solid var(--oro-600);
-  border-radius:0 clamp(28px,6vmin,58px) 0 clamp(28px,6vmin,58px);
 }
-.frame::before{inset:0}
+.frame::before{
+  inset:0;
+  border:1.5px solid var(--oro-500);
+  border-radius:var(--r);
+}
 .frame::after{
-  inset:9px;border-width:1px;border-color:var(--oro-500);opacity:.6;
-  border-radius:0 clamp(22px,5vmin,48px) 0 clamp(22px,5vmin,48px);
+  inset:var(--gap);
+  border:1px solid var(--oro-600);
+  border-radius:calc(var(--r) - var(--gap));
+  opacity:.7;
 }
 
 .hero__inner{position:relative}
@@ -152,16 +159,12 @@ main,header,footer{position:relative;z-index:1}
   width:clamp(42px,7.5vmin,70px);aspect-ratio:1;height:auto;margin:0 auto .5em;
   overflow:visible;
 }
-.magen__out{
-  fill:none;stroke:var(--oro-500);stroke-width:3.2;
-  stroke-linejoin:round;
+.magen__t{
+  fill:none;stroke:url(#oroStroke);stroke-width:4.5;
+  stroke-linejoin:miter;stroke-miterlimit:8;
 }
-.magen__in{
-  fill:none;stroke:var(--oro-500);stroke-width:1.6;opacity:.75;
-  stroke-linejoin:round;
-}
-.magen--sm{width:32px;margin-bottom:.4em;opacity:.85}
-.magen--sm .magen__out{stroke-width:4}
+.magen--sm{width:30px;margin-bottom:.4em;opacity:.85}
+.magen--sm .magen__t{stroke-width:6}
 
 .hero__save{margin:0;line-height:.92}
 .hero__save span{display:block;font-family:var(--f-serif)}
@@ -289,7 +292,11 @@ main,header,footer{position:relative;z-index:1}
   padding:clamp(26px,4vw,38px) clamp(18px,3vw,26px);
   text-align:center;background:rgba(7,28,21,.35);
 }
-.card__icon{width:42px;height:42px;margin:0 auto 1em;stroke:var(--oro-500);fill:none;stroke-width:1.4}
+.card__icon{
+  width:44px;height:44px;margin:0 auto 1em;
+  stroke:url(#oroStroke);fill:none;stroke-width:1.8;
+  stroke-linejoin:round;stroke-linecap:round;overflow:visible;
+}
 .card__titulo{
   font-family:var(--f-serif);font-size:1rem;
   letter-spacing:.26em;text-transform:uppercase;color:var(--oro-400);
@@ -316,10 +323,14 @@ main,header,footer{position:relative;z-index:1}
 .mapa iframe{width:100%;height:100%;border:0;display:block;filter:grayscale(.35) contrast(1.05)}
 
 /* ---- Galería ---- */
+/* 3 y 3, centrada. Con auto-fit quedaban 5 arriba y 1 sola abajo. */
 .galeria{
-  display:grid;gap:12px;
-  grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  display:grid;gap:14px;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  width:min(880px,100%);margin-inline:auto;
 }
+@media (max-width:820px){.galeria{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:460px){.galeria{grid-template-columns:1fr;width:min(320px,100%)}}
 .galeria button{
   padding:0;border:1px solid rgba(184,137,58,.35);background:none;cursor:pointer;
   aspect-ratio:3/4;overflow:hidden;position:relative;

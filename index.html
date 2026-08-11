@@ -10,6 +10,9 @@
 <meta property="og:title" content="Bar Mitzvá de Leivi">
 <meta property="og:description" content="Queremos que seas parte de este día tan especial.">
 
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+<link rel="apple-touch-icon" href="img/favicon.svg">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=Pinyon+Script&display=swap" rel="stylesheet">
@@ -17,32 +20,24 @@
 </head>
 <body>
 
-<!-- Ornamento reutilizable para las esquinas del marco -->
+<!-- Degradé dorado para los trazos SVG -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
-  <g id="orn" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round">
-    <path d="M4 52 C 4 24, 24 4, 52 4"/>
-    <path d="M16 62 C 16 38, 38 16, 62 16" stroke-width="1.6" opacity=".7"/>
-    <path d="M52 4 C 70 4, 84 10, 84 22 C 84 31, 74 34, 69 29 C 64 24, 68 15, 78 17"/>
-    <path d="M4 52 C 4 70, 10 84, 22 84 C 31 84, 34 74, 29 69 C 24 64, 15 68, 17 78"/>
-    <circle cx="41" cy="41" r="2.6" fill="currentColor" stroke="none"/>
-  </g>
+  <linearGradient id="oroStroke" x1="0" y1="0" x2=".85" y2="1">
+    <stop offset="0%"   stop-color="#F2DFAE"/>
+    <stop offset="40%"  stop-color="#D4AF61"/>
+    <stop offset="68%"  stop-color="#B8893A"/>
+    <stop offset="100%" stop-color="#E9CE8F"/>
+  </linearGradient>
 </defs></svg>
 
 <!-- ============ HERO / SAVE THE DATE ============ -->
 <header class="hero">
   <div class="frame">
-    <svg class="corner corner--tl" viewBox="0 0 100 100" aria-hidden="true"><use href="#orn"/></svg>
-    <svg class="corner corner--tr" viewBox="0 0 100 100" aria-hidden="true"><use href="#orn"/></svg>
-    <svg class="corner corner--bl" viewBox="0 0 100 100" aria-hidden="true"><use href="#orn"/></svg>
-    <svg class="corner corner--br" viewBox="0 0 100 100" aria-hidden="true"><use href="#orn"/></svg>
-
     <div class="hero__inner">
 
       <svg class="magen" viewBox="0 0 100 100" aria-hidden="true">
-        <polygon class="magen__out"
-          points="50,5 62.99,27.5 88.97,27.5 75.98,50 88.97,72.5 62.99,72.5 50,95 37.01,72.5 11.03,72.5 24.02,50 11.03,27.5 37.01,27.5"/>
-        <polygon class="magen__in"
-          points="62.99,27.5 75.98,50 62.99,72.5 37.01,72.5 24.02,50 37.01,27.5"/>
+        <polygon class="magen__t" points="50,6 88.1,72 11.9,72"/>
+        <polygon class="magen__t" points="50,94 11.9,28 88.1,28"/>
       </svg>
 
       <h1 class="hero__save">
@@ -218,7 +213,7 @@
 
 <footer class="footer">
   <svg class="magen magen--sm" viewBox="0 0 100 100" aria-hidden="true">
-    <polygon points="50,10 89.6,78.6 10.4,78.6" /><polygon points="50,90 10.4,21.4 89.6,21.4" />
+    <polygon class="magen__t" points="50,6 88.1,72 11.9,72"/><polygon class="magen__t" points="50,94 11.9,28 88.1,28"/>
   </svg>
   <p data-cfg="footer">Leivi · 10.12.26</p>
 </footer>
