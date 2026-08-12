@@ -157,7 +157,7 @@ window.CONFIG = {
     whatsapp: "5491100000000",   // país + área + número, sin + ni espacios
 
     // Opción B: Google Sheets. Si tiene URL, se usa en lugar de WhatsApp.
-    endpoint: null
+    endpoint: "https://script.google.com/macros/s/AKfycbwUc3Y0IgxKSIM9w0MVsZJa0UbZIzQOPMvtqEbTWL5AMBU7hJ4G3MHZnKzF7zstfBLpHQ/exec"
   },
 
   /* ---------- HASHTAG ---------- */
