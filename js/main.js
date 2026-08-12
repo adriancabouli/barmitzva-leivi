@@ -288,6 +288,54 @@
     hashEl.href = C.hashtag.instagram || '#';
   }
 
+  /* ---------- Envío a la planilla ----------
+     Un submit contra un iframe oculto: no pasa por CORS, así que
+     funciona en cualquier navegador. No podemos leer la respuesta
+     (el iframe queda en otro dominio), pero sí saber que cargó.   */
+  function enviarPorIframe(url, datos, listo) {
+    var id = 'envio-' + Date.now();
+
+    var iframe = document.createElement('iframe');
+    iframe.name = id;
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+
+    var f = document.createElement('form');
+    f.action = url;
+    f.method = 'POST';
+    f.target = id;
+    f.style.display = 'none';
+
+    Object.keys(datos).forEach(function (k) {
+      var i = document.createElement('input');
+      i.type = 'hidden';
+      i.name = k;
+      i.value = datos[k];
+      f.appendChild(i);
+    });
+
+    document.body.appendChild(f);
+
+    var terminado = false;
+    var limpiar = function (ok) {
+      if (terminado) return;
+      terminado = true;
+      clearTimeout(porLasDudas);
+      setTimeout(function () {
+        if (f.parentNode) f.parentNode.removeChild(f);
+        if (iframe.parentNode) iframe.parentNode.removeChild(iframe);
+      }, 1000);
+      listo(ok);
+    };
+
+    iframe.addEventListener('load', function () { limpiar(true); });
+
+    // Si en 12 segundos no cargó, algo falló
+    var porLasDudas = setTimeout(function () { limpiar(false); }, 12000);
+
+    f.submit();
+  }
+
   /* ---------- RSVP ---------- */
   var form = document.getElementById('rsvp-form');
   var msg = document.getElementById('form-msg');
@@ -327,20 +375,24 @@
 
       if (endpoint) {
         btn.disabled = true;
-        fetch(endpoint, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams(datos).toString()
-        }).then(function () {
-          form.reset();
-          msg.className = 'form__msg ok';
-          msg.textContent = '¡Gracias! Recibimos tu confirmación 🎉';
-        }).catch(function () {
-          msg.className = 'form__msg error';
-          msg.textContent = 'No pudimos enviarlo. Probá de nuevo en un momento.';
-        }).finally(function () {
+        msg.className = 'form__msg';
+        msg.textContent = 'Enviando…';
+
+        // Se envía con un formulario contra un iframe oculto, no con fetch.
+        // Google Apps Script responde con un redirect a otro dominio y el
+        // fetch se cuelga ahí; un submit común no pasa por CORS y funciona
+        // siempre, incluido Safari en iPhone.
+        enviarPorIframe(endpoint, datos, function (ok) {
           btn.disabled = false;
+          if (ok) {
+            form.reset();
+            if (campoCant) campoCant.hidden = false;
+            msg.className = 'form__msg ok';
+            msg.textContent = '¡Gracias! Recibimos tu confirmación 🎉';
+          } else {
+            msg.className = 'form__msg error';
+            msg.textContent = 'No pudimos enviarlo. Probá de nuevo en un momento.';
+          }
         });
         return;
       }
