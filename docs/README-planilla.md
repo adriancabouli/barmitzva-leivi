@@ -56,6 +56,19 @@ git add -A && git commit -m "RSVP a la planilla" && git push origin main
 
 Entrá al sitio, completá el formulario con datos de prueba y fijate que aparezca la fila en la planilla. Después borrás esa fila.
 
+## Ponerla linda
+
+La planilla queda con los colores de la invitación: los títulos en verde con letras doradas, las filas alternadas en crema, el "Sí" en verde y el "No" en rojo apagado, la fecha en `dd/MM/aaaa hh:mm` y las columnas que no se usan escondidas.
+
+Si tu planilla ya existía de antes, se le aplica en dos toques:
+
+1. **Extensiones → Apps Script**, pegá de nuevo el contenido de [`planilla-confirmaciones.gs`](planilla-confirmaciones.gs) y guardá.
+2. Arriba, en el desplegable de funciones, elegí **`embellecer`** y tocá **▶ Ejecutar**.
+
+**Acá no hace falta volver a implementar.** Implementar es sólo para el formulario del sitio (`doPost`); una función que corrés a mano usa el código que acabás de guardar. Podés correr `embellecer` las veces que quieras: siempre deja lo mismo, y no toca las confirmaciones ya cargadas.
+
+Los colores salen de `css/styles.css` y están arriba de todo del `.gs`, por si alguna vez cambia la paleta del sitio.
+
 ## Ver los totales
 
 En el editor de Apps Script, elegí la función `crearResumen` en el desplegable de arriba y tocá **▶ Ejecutar**. Te crea una hoja **Resumen** con:

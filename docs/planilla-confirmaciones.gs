@@ -38,6 +38,18 @@ function doPost(e) {
   }
 }
 
+/* ============================================================
+   LOS COLORES DEL SITIO
+   Son los mismos de css/styles.css, para que la planilla se vea
+   parte de la invitación y no una tabla suelta.
+   ============================================================ */
+var VERDE        = "#0A2619";   // --verde-700, el fondo de los títulos
+var VERDE_TEXTO  = "#04120D";   // --verde-900, el texto
+var VERDE_CLARO  = "#13452D";   // --verde-500
+var ORO          = "#F5C662";   // --oro-400, los títulos
+var CREMA        = "#FBF7EF";   // crema muy suave, para las filas alternadas
+var LINEA        = "#E8DCC3";   // los bordes
+
 /* Crea la hoja con los títulos la primera vez */
 function obtenerHoja_() {
   var libro = SpreadsheetApp.getActiveSpreadsheet();
@@ -49,18 +61,91 @@ function obtenerHoja_() {
 
   if (hoja.getLastRow() === 0) {
     hoja.appendRow(["Fecha", "Nombre", "Contacto", "Asiste", "Cantidad", "Mensaje"]);
-    hoja.getRange(1, 1, 1, 6)
-        .setFontWeight("bold")
-        .setBackground("#0A2419")
-        .setFontColor("#F5C662");
-    hoja.setFrozenRows(1);
-    hoja.setColumnWidth(1, 150);
-    hoja.setColumnWidth(2, 220);
-    hoja.setColumnWidth(3, 180);
-    hoja.setColumnWidth(6, 320);
+    darleFormato_(hoja);
   }
 
   return hoja;
+}
+
+/* ============================================================
+   EL FORMATO
+   Corré "embellecer" una vez desde el editor (▶ Ejecutar) y la
+   planilla que ya tenés queda con los colores del sitio. Se puede
+   correr las veces que quieras: siempre deja lo mismo.
+   ============================================================ */
+function embellecer() {
+  darleFormato_(obtenerHoja_());
+  var resumen = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Resumen");
+  if (resumen) crearResumen();
+}
+
+function darleFormato_(hoja) {
+  var filas = hoja.getMaxRows();
+
+  hoja.getRange(1, 1, filas, 6)
+      .setFontFamily("Georgia")
+      .setFontSize(11)
+      .setFontColor(VERDE_TEXTO)
+      .setVerticalAlignment("middle")
+      .setBorder(true, true, true, true, true, true, LINEA, SpreadsheetApp.BorderStyle.SOLID);
+
+  // Los títulos, en verde con letras doradas como la portada
+  var cab = hoja.getRange(1, 1, 1, 6);
+  cab.setFontWeight("bold")
+     .setBackground(VERDE)
+     .setFontColor(ORO)
+     .setHorizontalAlignment("center");
+  // Cinzel es la tipografía de los títulos del sitio. Si esta planilla no
+  // la tiene disponible no pasa nada: se queda con Georgia, que también
+  // es serif y acompaña igual.
+  try { cab.setFontFamily("Cinzel"); } catch (e) {}
+  hoja.setRowHeight(1, 38);
+  hoja.setFrozenRows(1);
+
+  hoja.setColumnWidth(1, 155);   // Fecha
+  hoja.setColumnWidth(2, 230);   // Nombre
+  hoja.setColumnWidth(3, 175);   // Contacto
+  hoja.setColumnWidth(4, 85);    // Asiste
+  hoja.setColumnWidth(5, 95);    // Cantidad
+  hoja.setColumnWidth(6, 340);   // Mensaje
+
+  if (filas > 1) {
+    var cuerpo = hoja.getRange(2, 1, filas - 1, 6);
+    hoja.getRange(2, 1, filas - 1, 1)
+        .setNumberFormat("dd/MM/yyyy HH:mm")
+        .setHorizontalAlignment("center");
+    hoja.getRange(2, 4, filas - 1, 2).setHorizontalAlignment("center");
+    hoja.getRange(2, 5, filas - 1, 1).setFontWeight("bold");
+    hoja.getRange(2, 6, filas - 1, 1).setWrap(true);
+
+    // El color se pone con reglas, no pintando celdas: así las
+    // confirmaciones que lleguen mañana salen pintadas solas.
+    var colAsiste = hoja.getRange(2, 4, filas - 1, 1);
+    hoja.setConditionalFormatRules([
+      SpreadsheetApp.newConditionalFormatRule()
+        .whenTextEqualTo("Sí")
+        .setBackground("#DFF0E3").setFontColor(VERDE_CLARO).setBold(true)
+        .setRanges([colAsiste]).build(),
+      SpreadsheetApp.newConditionalFormatRule()
+        .whenTextEqualTo("No")
+        .setBackground("#F6E6E3").setFontColor("#8A3A2C")
+        .setRanges([colAsiste]).build(),
+      SpreadsheetApp.newConditionalFormatRule()
+        .whenFormulaSatisfied("=ISEVEN(ROW())")
+        .setBackground(CREMA)
+        .setRanges([cuerpo]).build()
+    ]);
+  }
+
+  // Con los bordes puestos, la cuadrícula de fondo sobra y ensucia
+  hoja.setHiddenGridlines(true);
+
+  // Las columnas de la G en adelante no se usan: ocultarlas hace que
+  // la hoja se lea como una tarjeta y no como una planilla infinita
+  var sobran = hoja.getMaxColumns() - 6;
+  if (sobran > 0) hoja.hideColumns(7, sobran);
+
+  if (!hoja.getFilter()) hoja.getRange(1, 1, filas, 6).createFilter();
 }
 
 /* Aviso por mail, sólo si cargaste MI_MAIL */
@@ -108,4 +193,29 @@ function crearResumen() {
 
   hoja.getRange("A3:A7").setFontWeight("bold");
   hoja.setColumnWidth(1, 220);
+
+  // Mismos colores que la hoja de confirmaciones
+  hoja.getRange(1, 1, 8, 2)
+      .setFontFamily("Georgia").setFontSize(11).setFontColor(VERDE_TEXTO)
+      .setVerticalAlignment("middle");
+
+  var titulo = hoja.getRange("A1:B1").merge();
+  titulo.setBackground(VERDE).setFontColor(ORO).setFontSize(13)
+        .setFontWeight("bold").setHorizontalAlignment("center");
+  try { titulo.setFontFamily("Cinzel"); } catch (e) {}
+  hoja.setRowHeight(1, 40);
+
+  hoja.getRange("B3:B7")
+      .setFontWeight("bold").setFontSize(13).setFontColor(VERDE_CLARO)
+      .setHorizontalAlignment("center");
+  hoja.setColumnWidth(2, 150);
+
+  hoja.getRange("A3:B5").setBorder(
+    true, true, true, true, true, true, LINEA, SpreadsheetApp.BorderStyle.SOLID);
+  hoja.getRange("A7:B7").setBorder(
+    true, true, true, true, true, true, LINEA, SpreadsheetApp.BorderStyle.SOLID);
+
+  hoja.setHiddenGridlines(true);
+  var sobran = hoja.getMaxColumns() - 2;
+  if (sobran > 0) hoja.hideColumns(3, sobran);
 }
