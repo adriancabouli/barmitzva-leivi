@@ -292,88 +292,50 @@
      Google Apps Script contesta con un redirect a script.googleusercontent.com,
      y ESA respuesta viene con "X-Frame-Options: SAMEORIGIN" y
      "Content-Security-Policy: frame-ancestors 'self'". O sea: la respuesta
-     NUNCA se puede dibujar adentro de un iframe nuestro, el navegador la
-     bloquea. Por eso el iframe no es un buen mensajero — depende de que
-     igual dispare 'load', que unos navegadores hacen y otros no.
+     NUNCA se puede leer ni dibujar desde nuestro sitio.
 
-     El camino bueno es fetch en modo no-cors: manda el POST, sigue el
+     Va con fetch en modo no-cors: manda el POST, sigue el
      redirect y resuelve cuando terminó. La respuesta viene opaca (no se
      puede leer, Google no manda cabeceras CORS), pero que la promesa
      resuelva ya dice que el pedido salió y completó, que es lo que hace
      falta saber. Con el cuerpo en x-www-form-urlencoded no hay preflight,
      así que anda igual en Chrome, Firefox y Safari de iPhone.
 
-     El iframe queda de reserva por si fetch no está o falla.            */
+     NO va más por un iframe oculto, y se probó por qué: apuntando el envío a
+     un dominio inexistente, el formulario contestaba "¡Gracias! Recibimos tu
+     confirmación" a los 0,8 segundos. Un iframe cuya navegación fracasa
+     dispara 'load' igual que uno que cargó, así que su señal de éxito no
+     distinguía entre que el dato llegara y que no llegara nada. Mentirle a
+     alguien que confirmó es peor que fallar: se queda afuera creyendo que
+     avisó. Si fetch no existe, mejor mandar por WhatsApp (ver más abajo).  */
   function enviar(url, datos, listo) {
-    if (!window.fetch) return enviarPorIframe(url, datos, listo);
-
     var cuerpo = Object.keys(datos).map(function (k) {
       return encodeURIComponent(k) + '=' + encodeURIComponent(datos[k]);
     }).join('&');
 
-    fetch(url, {
+    var opciones = {
       method: 'POST',
       mode: 'no-cors',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
       body: cuerpo
-    }).then(function () {
-      listo(true);
-    }).catch(function () {
-      enviarPorIframe(url, datos, listo);
-    });
-  }
-
-  function enviarPorIframe(url, datos, listo) {
-    var id = 'envio-' + Date.now();
-
-    var iframe = document.createElement('iframe');
-    iframe.name = id;
-    iframe.style.display = 'none';
-    document.body.appendChild(iframe);
-
-    var f = document.createElement('form');
-    f.action = url;
-    f.method = 'POST';
-    f.target = id;
-    f.style.display = 'none';
-
-    Object.keys(datos).forEach(function (k) {
-      var i = document.createElement('input');
-      i.type = 'hidden';
-      i.name = k;
-      i.value = datos[k];
-      f.appendChild(i);
-    });
-
-    document.body.appendChild(f);
-
-    var terminado = false;
-    var limpiar = function (ok) {
-      if (terminado) return;
-      terminado = true;
-      clearTimeout(porLasDudas);
-      setTimeout(function () {
-        if (f.parentNode) f.parentNode.removeChild(f);
-        if (iframe.parentNode) iframe.parentNode.removeChild(iframe);
-      }, 1000);
-      listo(ok);
     };
 
-    iframe.addEventListener('load', function () {
-      // El primer 'load' puede ser el about:blank con el que nace el iframe,
-      // y eso no es la respuesta de nadie. Si todavía se puede leer la
-      // dirección, seguimos en casa: no cuenta. Cuando de verdad cargó lo de
-      // Google, leerla tira error por ser otro dominio, y ahí sí terminó.
-      try {
-        if (iframe.contentWindow.location.href === 'about:blank') return;
-      } catch (e) {}
-      limpiar(true);
+    // Si la conexión se cuelga, cortamos a los 20 segundos en vez de dejar
+    // el botón girando para siempre.
+    var cortar;
+    if (window.AbortController) {
+      var control = new AbortController();
+      opciones.signal = control.signal;
+      cortar = setTimeout(function () { control.abort(); }, 20000);
+    }
+
+    fetch(url, opciones).then(function () {
+      clearTimeout(cortar);
+      listo(true);
+    })['catch'](function () {
+      clearTimeout(cortar);
+      listo(false);
     });
-
-    // Si en 12 segundos no cargó, algo falló
-    var porLasDudas = setTimeout(function () { limpiar(false); }, 12000);
-
-    f.submit();
   }
 
   /* ---------- RSVP ---------- */
@@ -413,7 +375,7 @@
       var btn = form.querySelector('button[type=submit]');
       var endpoint = get('rsvp.endpoint');
 
-      if (endpoint) {
+      if (endpoint && window.fetch) {
         btn.disabled = true;
         msg.className = 'form__msg';
         msg.textContent = 'Enviando…';
