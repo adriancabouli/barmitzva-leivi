@@ -22,6 +22,10 @@ window.CONFIG = {
   evento: "Bar Mitzvá",          // cambiar a "Bat Mitzvá" si corresponde
   saveTheDate: "Save the Date",
 
+  // Lo que dice el header. Antes repetía "Bar Mitzvá de Leivi",
+  // que ya está grande en la portada: con el nombre solo alcanza.
+  marca: "Leivi",
+
   // Fecha y hora del evento (ISO, huso horario de Argentina)
   fechaISO: "2026-12-10T09:00:00-03:00",
   fechaPunteada: "10 · 12 · 2026",
@@ -126,7 +130,7 @@ window.CONFIG = {
   /* ---------- GALERÍA ---------- */
   galeria: {
     titulo: "Momentos",
-    subtitulo: "Un poco de nuestra historia hasta acá",
+    subtitulo: "Un poco de mi historia hasta acá",
     fotos: [
       { src: "img/galeria/foto-1.jpeg", alt: "Leivi tocando el shofar" },
       { src: "img/galeria/foto-2.jpeg", alt: "Leivi con la Torá" },

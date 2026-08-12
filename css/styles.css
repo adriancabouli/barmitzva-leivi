@@ -267,16 +267,11 @@ p{margin:0 0 1em}
 
 .marca{display:flex;align-items:center;gap:12px;text-decoration:none;flex:none}
 .marca__magen{width:30px;height:30px;flex:none;fill:none;stroke:url(#oroStroke);stroke-width:6}
-.marca__txt{display:flex;flex-direction:column;line-height:1.2}
-.marca__txt b{
-  font-family:var(--f-titulo);font-weight:500;
-  font-size:.85rem;letter-spacing:.2em;text-transform:uppercase;
+.marca__txt{
+  font-family:var(--f-script);
+  font-size:1.65rem;line-height:1;
   color:var(--oro-300);
-}
-.marca__txt i{
-  font-family:var(--f-titulo);font-style:normal;
-  font-size:.85rem;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--oro-300);
+  padding-bottom:.14em;   /* el script tiene descendentes */
 }
 
 .nav__links{display:flex;gap:clamp(14px,2.2vw,32px);margin:0 auto}
