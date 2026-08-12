@@ -289,9 +289,40 @@
   }
 
   /* ---------- Envío a la planilla ----------
-     Un submit contra un iframe oculto: no pasa por CORS, así que
-     funciona en cualquier navegador. No podemos leer la respuesta
-     (el iframe queda en otro dominio), pero sí saber que cargó.   */
+     Google Apps Script contesta con un redirect a script.googleusercontent.com,
+     y ESA respuesta viene con "X-Frame-Options: SAMEORIGIN" y
+     "Content-Security-Policy: frame-ancestors 'self'". O sea: la respuesta
+     NUNCA se puede dibujar adentro de un iframe nuestro, el navegador la
+     bloquea. Por eso el iframe no es un buen mensajero — depende de que
+     igual dispare 'load', que unos navegadores hacen y otros no.
+
+     El camino bueno es fetch en modo no-cors: manda el POST, sigue el
+     redirect y resuelve cuando terminó. La respuesta viene opaca (no se
+     puede leer, Google no manda cabeceras CORS), pero que la promesa
+     resuelva ya dice que el pedido salió y completó, que es lo que hace
+     falta saber. Con el cuerpo en x-www-form-urlencoded no hay preflight,
+     así que anda igual en Chrome, Firefox y Safari de iPhone.
+
+     El iframe queda de reserva por si fetch no está o falla.            */
+  function enviar(url, datos, listo) {
+    if (!window.fetch) return enviarPorIframe(url, datos, listo);
+
+    var cuerpo = Object.keys(datos).map(function (k) {
+      return encodeURIComponent(k) + '=' + encodeURIComponent(datos[k]);
+    }).join('&');
+
+    fetch(url, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+      body: cuerpo
+    }).then(function () {
+      listo(true);
+    }).catch(function () {
+      enviarPorIframe(url, datos, listo);
+    });
+  }
+
   function enviarPorIframe(url, datos, listo) {
     var id = 'envio-' + Date.now();
 
@@ -328,7 +359,16 @@
       listo(ok);
     };
 
-    iframe.addEventListener('load', function () { limpiar(true); });
+    iframe.addEventListener('load', function () {
+      // El primer 'load' puede ser el about:blank con el que nace el iframe,
+      // y eso no es la respuesta de nadie. Si todavía se puede leer la
+      // dirección, seguimos en casa: no cuenta. Cuando de verdad cargó lo de
+      // Google, leerla tira error por ser otro dominio, y ahí sí terminó.
+      try {
+        if (iframe.contentWindow.location.href === 'about:blank') return;
+      } catch (e) {}
+      limpiar(true);
+    });
 
     // Si en 12 segundos no cargó, algo falló
     var porLasDudas = setTimeout(function () { limpiar(false); }, 12000);
@@ -378,11 +418,7 @@
         msg.className = 'form__msg';
         msg.textContent = 'Enviando…';
 
-        // Se envía con un formulario contra un iframe oculto, no con fetch.
-        // Google Apps Script responde con un redirect a otro dominio y el
-        // fetch se cuelga ahí; un submit común no pasa por CORS y funciona
-        // siempre, incluido Safari en iPhone.
-        enviarPorIframe(endpoint, datos, function (ok) {
+        enviar(endpoint, datos, function (ok) {
           btn.disabled = false;
           if (ok) {
             form.reset();
