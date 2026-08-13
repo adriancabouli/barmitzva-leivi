@@ -18,8 +18,11 @@ function doPost(e) {
     var hoja = obtenerHoja_();
     var d = (e && e.parameter) ? e.parameter : {};
 
+    // La misma fecha va a la planilla y al mail, así nunca discrepan
+    var cuando = new Date();
+
     hoja.appendRow([
-      new Date(),
+      cuando,
       d.nombre || "",
       d.contacto || "",
       d.asistencia || "",
@@ -27,7 +30,7 @@ function doPost(e) {
       d.mensaje || ""
     ]);
 
-    avisar_(d);
+    avisar_(d, cuando);
     return ContentService.createTextOutput("ok");
 
   } catch (err) {
@@ -149,15 +152,25 @@ function darleFormato_(hoja) {
 }
 
 /* Aviso por mail, sólo si cargaste MI_MAIL */
-function avisar_(d) {
+function avisar_(d, cuando) {
   if (!MI_MAIL) return;
 
   var viene = d.asistencia === "No" ? "NO viene" : "viene (" + (d.cantidad || 1) + ")";
+
+  // Fecha sola, sin hora, en el huso de la planilla — si se usa el del
+  // servidor de Google, una confirmación de la noche puede aparecer con
+  // la fecha del día siguiente.
+  var fecha = Utilities.formatDate(
+    cuando || new Date(),
+    SpreadsheetApp.getActiveSpreadsheet().getSpreadsheetTimeZone(),
+    "dd/MM/yyyy"
+  );
 
   MailApp.sendEmail(
     MI_MAIL,
     "Bar Mitzvá de Leivi — confirmó " + (d.nombre || "alguien"),
     [
+      "Fecha: " + fecha,
       "Nombre: " + (d.nombre || ""),
       "Contacto: " + (d.contacto || ""),
       "Asiste: " + viene,
