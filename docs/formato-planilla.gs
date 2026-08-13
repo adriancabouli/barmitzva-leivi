@@ -66,7 +66,7 @@ function darleFormato_(hoja) {
   if (filas > 1) {
     var cuerpo = hoja.getRange(2, 1, filas - 1, 6);
     hoja.getRange(2, 1, filas - 1, 1)
-        .setNumberFormat("dd/MM/yyyy HH:mm")
+        .setNumberFormat("dd/MM/yyyy")
         .setHorizontalAlignment("center");
     hoja.getRange(2, 4, filas - 1, 2).setHorizontalAlignment("center");
     hoja.getRange(2, 5, filas - 1, 1).setFontWeight("bold");
