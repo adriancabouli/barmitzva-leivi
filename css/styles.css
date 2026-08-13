@@ -5,12 +5,12 @@
 :root{
   /* Verdes — el verde es un MATERIAL, no un color plano:
      estos tonos se combinan en capas para dar profundidad. */
-  --verde-950:#020C08;
-  --verde-900:#04120D;
-  --verde-800:#061A12;
-  --verde-700:#0A2619;
-  --verde-600:#0E3524;
-  --verde-500:#13452D;
+  --verde-950:#050C02;
+  --verde-900:#081204;
+  --verde-800:#0C1A06;
+  --verde-700:#12260A;
+  --verde-600:#19350E;
+  --verde-500:#214513;
 
   /* Dorados */
   --oro-200:#FFF3CE;
@@ -83,7 +83,7 @@ p{margin:0 0 1em}
 .fondo::before{
   content:"";position:absolute;inset:0;
   background:
-    radial-gradient(58% 44% at 50% 26%, #0B2C1E 0%, transparent 62%),
+    radial-gradient(58% 44% at 50% 26%, #142C0B 0%, transparent 62%),
     radial-gradient(90% 70% at 50% 45%, var(--verde-700) 0%, transparent 70%),
     radial-gradient(120% 100% at 50% 50%, transparent 26%, #000 100%),
     var(--verde-800);
@@ -95,8 +95,8 @@ p{margin:0 0 1em}
   width:min(190vw,2200px);aspect-ratio:1;
   transform:translate(-50%,-50%);
   background:radial-gradient(circle,
-    rgba(28,92,65,.34) 0%, rgba(28,92,65,.2) 26%,
-    rgba(28,92,65,.09) 50%, transparent 76%);
+    rgba(46,92,28,.34) 0%, rgba(46,92,28,.2) 26%,
+    rgba(46,92,28,.09) 50%, transparent 76%);
   animation:respirar 11s ease-in-out infinite;
 }
 @keyframes respirar{
@@ -245,12 +245,12 @@ p{margin:0 0 1em}
      el texto se corta de golpe al pasar por detrás. */
   inset:-8px 0 -110px;
   background:linear-gradient(180deg,
-    rgba(4,18,13,.98) 0%,
-    rgba(4,18,13,.96) 38%,
-    rgba(4,18,13,.82) 58%,
-    rgba(4,18,13,.5)  74%,
-    rgba(4,18,13,.2)  88%,
-    rgba(4,18,13,0)   100%);
+    rgba(8,18,4,.98) 0%,
+    rgba(8,18,4,.96) 38%,
+    rgba(8,18,4,.82) 58%,
+    rgba(8,18,4,.5)  74%,
+    rgba(8,18,4,.2)  88%,
+    rgba(8,18,4,0)   100%);
   -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
   -webkit-mask-image:linear-gradient(180deg,#000 34%,rgba(0,0,0,.6) 62%,transparent 100%);
   mask-image:linear-gradient(180deg,#000 34%,rgba(0,0,0,.6) 62%,transparent 100%);
@@ -458,7 +458,7 @@ p{margin:0 0 1em}
    fondo, borde dorado marcado y sombra. Con el mismo tono del fondo
    se fundía y no parecía flotar. */
 .capitulo--datos .datos{
-  background:linear-gradient(180deg,#050F0A 0%,#061710 60%,#04110B 100%);
+  background:linear-gradient(180deg,#080F05 0%,#0B1706 60%,#081104 100%);
   border:1px solid rgba(224,169,63,.55);
   border-radius:14px;
   box-shadow:
@@ -597,8 +597,8 @@ p{margin:0 0 1em}
 .foto::before{
   content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
   background:
-    linear-gradient(180deg,rgba(4,18,13,.5) 0%,transparent 34%,transparent 60%,rgba(2,12,8,.75) 100%),
-    radial-gradient(120% 90% at 50% 45%,transparent 40%,rgba(4,18,13,.55) 100%);
+    linear-gradient(180deg,rgba(8,18,4,.5) 0%,transparent 34%,transparent 60%,rgba(5,12,2,.75) 100%),
+    radial-gradient(120% 90% at 50% 45%,transparent 40%,rgba(8,18,4,.55) 100%);
   transition:opacity .7s ease;
 }
 /* Un solo filete dorado por encima de la imagen */
@@ -620,7 +620,7 @@ p{margin:0 0 1em}
   width:48px;height:48px;margin:-24px 0 0 -24px;
   border:1px solid rgba(255,243,206,.55);border-radius:50%;
   display:grid;place-items:center;
-  background:rgba(2,12,8,.45);
+  background:rgba(5,12,2,.45);
   -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);
   opacity:0;transform:scale(.82);
   transition:opacity .45s ease,transform .45s cubic-bezier(.22,.61,.36,1);
@@ -705,7 +705,7 @@ p{margin:0 0 1em}
    ============================================================ */
 .lightbox{
   position:fixed;inset:0;z-index:2000;
-  background:rgba(2,12,8,.98);
+  background:rgba(5,12,2,.98);
   -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
   display:flex;align-items:center;justify-content:center;
 }
@@ -739,7 +739,7 @@ body.visor-abierto .nav{opacity:0;pointer-events:none;transition:opacity .3s eas
    ============================================================ */
 .velo{
   position:fixed;inset:0;z-index:3000;
-  background:rgba(2,12,8,.55);
+  background:rgba(5,12,2,.55);
   -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
   display:flex;align-items:center;justify-content:center;
   opacity:0;transition:opacity .35s ease;
@@ -846,7 +846,7 @@ body.visor-abierto .nav{opacity:0;pointer-events:none;transition:opacity .3s eas
     padding:clamp(20px,4vh,44px) 0 clamp(40px,7vh,80px);
   }
   .capitulo--datos .wrap{width:min(var(--max),90vw)}
-  .capitulo--datos .datos{background:linear-gradient(180deg,rgba(14,53,36,.28),rgba(4,18,13,.3));box-shadow:none}
+  .capitulo--datos .datos{background:linear-gradient(180deg,rgba(14,53,36,.28),rgba(8,18,4,.3));box-shadow:none}
   .pie{padding-bottom:clamp(56px,8vh,88px)}
 
   .datos{grid-template-columns:repeat(2,1fr)}
