@@ -338,6 +338,29 @@
     });
   }
 
+  /* ---------- El velo de "Enviando" ----------
+     Se muestra mientras la confirmación viaja. El [hidden] se saca
+     antes de encender la opacidad —con un reflow en el medio— porque
+     si las dos cosas pasan en el mismo cuadro el navegador no tiene
+     desde dónde animar y el velo aparece de golpe.               */
+  var elVelo = document.getElementById('velo-envio');
+
+  function velo(mostrar) {
+    if (!elVelo) return;
+    if (mostrar) {
+      elVelo.hidden = false;
+      void elVelo.offsetWidth;
+      elVelo.classList.add('visible');
+      document.body.style.overflow = 'hidden';
+    } else {
+      elVelo.classList.remove('visible');
+      document.body.style.overflow = '';
+      setTimeout(function () {
+        if (!elVelo.classList.contains('visible')) elVelo.hidden = true;
+      }, 400);
+    }
+  }
+
   /* ---------- RSVP ---------- */
   var form = document.getElementById('rsvp-form');
   var msg = document.getElementById('form-msg');
@@ -378,15 +401,17 @@
       if (endpoint && window.fetch) {
         btn.disabled = true;
         msg.className = 'form__msg';
-        msg.textContent = 'Enviando…';
+        msg.textContent = '';
+        velo(true);
 
         enviar(endpoint, datos, function (ok) {
+          velo(false);
           btn.disabled = false;
           if (ok) {
             form.reset();
             if (campoCant) campoCant.hidden = false;
             msg.className = 'form__msg ok';
-            msg.textContent = '¡Gracias! Recibimos tu confirmación 🎉';
+            msg.textContent = '¡Gracias! Recibimos tu confirmación';
           } else {
             msg.className = 'form__msg error';
             msg.textContent = 'No pudimos enviarlo. Probá de nuevo en un momento.';
@@ -405,7 +430,7 @@
 
       window.open('https://wa.me/' + get('rsvp.whatsapp') + '?text=' + encodeURIComponent(texto), '_blank');
       msg.className = 'form__msg ok';
-      msg.textContent = 'Se abrió WhatsApp para que envíes tu confirmación 🎉';
+      msg.textContent = 'Se abrió WhatsApp para que envíes tu confirmación';
     });
   }
 

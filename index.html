@@ -253,7 +253,15 @@
   <button class="lightbox__nav lightbox__nav--next" aria-label="Siguiente">&#8250;</button>
 </div>
 
-<script src="js/config.js?v=17"></script>
-<script src="js/main.js?v=17"></script>
+<!-- Velo de "Enviando": tapa la pantalla mientras viaja la confirmación -->
+<div class="velo" id="velo-envio" hidden>
+  <div class="velo__caja" role="status" aria-live="polite">
+    <span class="velo__anillo" aria-hidden="true"></span>
+    <p class="velo__texto">Enviando</p>
+  </div>
+</div>
+
+<script src="js/config.js?v=18"></script>
+<script src="js/main.js?v=18"></script>
 </body>
 </html>

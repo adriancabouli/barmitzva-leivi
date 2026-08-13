@@ -731,6 +731,52 @@ body.visor-abierto .nav{opacity:0;pointer-events:none;transition:opacity .3s eas
 .lightbox__nav--next{right:6px}
 
 /* ============================================================
+   VELO DE "ENVIANDO"
+   Mientras la confirmación viaja, la pantalla entera se difumina.
+   No es adorno: frena el segundo toque en el botón —que en un
+   teléfono lento es lo primero que uno hace— y deja claro que algo
+   está pasando.
+   ============================================================ */
+.velo{
+  position:fixed;inset:0;z-index:3000;
+  background:rgba(2,12,8,.55);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;transition:opacity .35s ease;
+}
+.velo[hidden]{display:none}
+.velo.visible{opacity:1}
+.velo__caja{display:flex;flex-direction:column;align-items:center;gap:22px}
+.velo__texto{
+  margin:0;
+  font-family:var(--f-titulo);
+  font-size:clamp(1.1rem,3.6vw,1.5rem);
+  letter-spacing:.18em;text-transform:uppercase;
+  color:var(--oro-300);
+}
+/* Los tres puntos se escriben solos, así el texto respira */
+.velo__texto::after{
+  content:"";display:inline-block;width:1.2em;text-align:left;
+  animation:velo-puntos 1.4s steps(4,end) infinite;
+}
+@keyframes velo-puntos{
+  0%{content:""}25%{content:"."}50%{content:".."}75%{content:"..."}
+}
+.velo__anillo{
+  width:46px;height:46px;border-radius:50%;
+  border:2px solid rgba(224,169,63,.22);
+  border-top-color:var(--oro-400);
+  animation:velo-gira .9s linear infinite;
+}
+@keyframes velo-gira{to{transform:rotate(360deg)}}
+
+@media (prefers-reduced-motion:reduce){
+  .velo{transition:none}
+  .velo__anillo{animation:none;border-top-color:rgba(224,169,63,.22)}
+  .velo__texto::after{animation:none;content:"…"}
+}
+
+/* ============================================================
    MICROANIMACIONES
    ============================================================ */
 .reveal{
