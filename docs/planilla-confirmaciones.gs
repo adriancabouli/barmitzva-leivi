@@ -30,6 +30,12 @@ function doPost(e) {
       d.mensaje || ""
     ]);
 
+    // La fecha se estampa con su formato acá mismo, en la fila recién
+    // escrita. Confiar sólo en el formato de la columna no alcanza: basta
+    // con borrar unas filas para que las de abajo suban con el formato
+    // viejo y una confirmación nueva vuelva a aparecer con la hora.
+    hoja.getRange(hoja.getLastRow(), 1).setNumberFormat("dd/MM/yyyy");
+
     avisar_(d, cuando);
     return ContentService.createTextOutput("ok");
 
