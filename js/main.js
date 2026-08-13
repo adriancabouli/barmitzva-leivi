@@ -344,21 +344,47 @@
      si las dos cosas pasan en el mismo cuadro el navegador no tiene
      desde dónde animar y el velo aparece de golpe.               */
   var elVelo = document.getElementById('velo-envio');
+  var elVeloTexto = document.getElementById('velo-texto');
+  var soloCerrable = false;   // el velo sólo se cierra cuando ya terminó
+  var cierreSolo;
 
-  function velo(mostrar) {
+  function velo(estado, texto) {
     if (!elVelo) return;
-    if (mostrar) {
-      elVelo.hidden = false;
-      void elVelo.offsetWidth;
-      elVelo.classList.add('visible');
-      document.body.style.overflow = 'hidden';
-    } else {
+    clearTimeout(cierreSolo);
+
+    if (estado === 'cerrar') {
       elVelo.classList.remove('visible');
       document.body.style.overflow = '';
+      soloCerrable = false;
       setTimeout(function () {
         if (!elVelo.classList.contains('visible')) elVelo.hidden = true;
       }, 400);
+      return;
     }
+
+    elVelo.classList.remove('velo--enviando', 'velo--listo', 'velo--error');
+    elVelo.classList.add('velo--' + estado);
+    if (texto) elVeloTexto.textContent = texto;
+    soloCerrable = (estado !== 'enviando');
+
+    if (elVelo.hidden) {
+      elVelo.hidden = false;
+      void elVelo.offsetWidth;   // sin este reflow el velo aparece de golpe
+      elVelo.classList.add('visible');
+      document.body.style.overflow = 'hidden';
+    }
+
+    // El "gracias" se va solo a los 5s; el error espera a que lo toquen,
+    // para que nadie se pierda que la confirmación no salió.
+    if (estado === 'listo') {
+      cierreSolo = setTimeout(function () { velo('cerrar'); }, 5000);
+    }
+  }
+
+  if (elVelo) {
+    elVelo.addEventListener('click', function () {
+      if (soloCerrable) velo('cerrar');
+    });
   }
 
   /* ---------- RSVP ---------- */
@@ -402,19 +428,18 @@
         btn.disabled = true;
         msg.className = 'form__msg';
         msg.textContent = '';
-        velo(true);
+        velo('enviando', 'Enviando');
 
         enviar(endpoint, datos, function (ok) {
-          velo(false);
           btn.disabled = false;
+          // El resultado se muestra en el velo, no abajo del formulario:
+          // ahí quedaba fuera de pantalla y no lo veía nadie.
           if (ok) {
             form.reset();
             if (campoCant) campoCant.hidden = false;
-            msg.className = 'form__msg ok';
-            msg.textContent = '¡Gracias! Recibimos tu confirmación';
+            velo('listo', '¡Gracias! Recibimos tu confirmación');
           } else {
-            msg.className = 'form__msg error';
-            msg.textContent = 'No pudimos enviarlo. Probá de nuevo en un momento.';
+            velo('error', 'No pudimos enviarlo. Probá de nuevo en un momento.');
           }
         });
         return;

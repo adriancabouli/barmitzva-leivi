@@ -746,7 +746,10 @@ body.visor-abierto .nav{opacity:0;pointer-events:none;transition:opacity .3s eas
 }
 .velo[hidden]{display:none}
 .velo.visible{opacity:1}
-.velo__caja{display:flex;flex-direction:column;align-items:center;gap:22px}
+.velo__caja{
+  display:flex;flex-direction:column;align-items:center;gap:22px;
+  padding:0 26px;
+}
 .velo__texto{
   margin:0;
   font-family:var(--f-titulo);
@@ -754,14 +757,8 @@ body.visor-abierto .nav{opacity:0;pointer-events:none;transition:opacity .3s eas
   letter-spacing:.18em;text-transform:uppercase;
   color:var(--oro-300);
 }
-/* Los tres puntos se escriben solos, así el texto respira */
-.velo__texto::after{
-  content:"";display:inline-block;width:1.2em;text-align:left;
-  animation:velo-puntos 1.4s steps(4,end) infinite;
-}
-@keyframes velo-puntos{
-  0%{content:""}25%{content:"."}50%{content:".."}75%{content:"..."}
-}
+
+/* --- Mientras viaja --- */
 .velo__anillo{
   width:46px;height:46px;border-radius:50%;
   border:2px solid rgba(224,169,63,.22);
@@ -769,11 +766,53 @@ body.visor-abierto .nav{opacity:0;pointer-events:none;transition:opacity .3s eas
   animation:velo-gira .9s linear infinite;
 }
 @keyframes velo-gira{to{transform:rotate(360deg)}}
+/* Los tres puntos se escriben solos, así el texto respira */
+.velo--enviando .velo__texto::after{
+  content:"";display:inline-block;width:1.2em;text-align:left;
+  animation:velo-puntos 1.4s steps(4,end) infinite;
+}
+@keyframes velo-puntos{
+  0%{content:""}25%{content:"."}50%{content:".."}75%{content:"..."}
+}
+
+/* --- Cuando terminó: el resultado se lee acá, no abajo del formulario,
+       donde quedaba fuera de pantalla y no lo veía nadie. --- */
+.velo__tilde{
+  width:64px;height:64px;fill:none;stroke:var(--oro-400);
+  stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;
+  animation:velo-entra .45s cubic-bezier(.22,.61,.36,1) both;
+}
+.velo__tilde circle{opacity:.45}
+@keyframes velo-entra{from{opacity:0;transform:scale(.82)}to{opacity:1;transform:scale(1)}}
+
+.velo__pie{
+  margin:0;font-family:var(--f-texto);
+  font-size:.95rem;letter-spacing:.06em;
+  color:var(--crema-45);
+}
+
+.velo--listo .velo__texto,
+.velo--error .velo__texto{
+  text-transform:none;letter-spacing:.01em;
+  font-size:clamp(1.15rem,4.6vw,1.6rem);
+  max-width:min(82vw,430px);text-align:center;line-height:1.4;
+}
+.velo--listo .velo__texto{color:var(--oro-200)}
+.velo--error .velo__texto{color:#F2CFC7}
+.velo--error .velo__tilde{stroke:#E39C8C}
+
+/* Cada estado muestra lo suyo */
+.velo__tilde,.velo__pie{display:none}
+.velo--enviando .velo__anillo{display:block}
+.velo--listo .velo__anillo,.velo--error .velo__anillo{display:none}
+.velo--listo .velo__tilde,.velo--listo .velo__pie,
+.velo--error .velo__pie{display:block}
 
 @media (prefers-reduced-motion:reduce){
   .velo{transition:none}
   .velo__anillo{animation:none;border-top-color:rgba(224,169,63,.22)}
-  .velo__texto::after{animation:none;content:"…"}
+  .velo__tilde{animation:none}
+  .velo--enviando .velo__texto::after{animation:none;content:"…"}
 }
 
 /* ============================================================

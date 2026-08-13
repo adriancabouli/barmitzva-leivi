@@ -257,7 +257,12 @@
 <div class="velo" id="velo-envio" hidden>
   <div class="velo__caja" role="status" aria-live="polite">
     <span class="velo__anillo" aria-hidden="true"></span>
-    <p class="velo__texto">Enviando</p>
+    <svg class="velo__tilde" viewBox="0 0 52 52" aria-hidden="true">
+      <circle cx="26" cy="26" r="24"/>
+      <path d="M15 27l8 8 15-16"/>
+    </svg>
+    <p class="velo__texto" id="velo-texto">Enviando</p>
+    <p class="velo__pie">Tocá para cerrar</p>
   </div>
 </div>
 
