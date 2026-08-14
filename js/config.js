@@ -32,7 +32,7 @@ window.CONFIG = {
   fechaLarga: "Jueves 10 de diciembre de 2026",
 
   tituloPagina: "Bar Mitzvá de Leivi · 10.12.26",
-  descripcionPagina: "Queremos que seas parte de este día tan especial.",
+  descripcionPagina: "Quiero que seas parte de este día tan especial.",
 
   /* ---------- MENÚ ---------- */
   menu: [
@@ -54,10 +54,10 @@ window.CONFIG = {
   invitacion: {
     titulo: "Con inmensa alegría",
     texto: [
-      "Llegó el día en que Leivi asume sus mitzvot y celebra su entrada a la vida adulta judía.",
-      "Nos encantaría que estés presente para compartir este momento con nosotros."
+      "Llegó el día en que asumo mis mitzvot y celebro mi entrada a la vida adulta judía.",
+      "Me encantaría que estés presente para compartir este momento conmigo."
     ],
-    firma: "Su familia"
+    firma: "Leivi"
   },
 
   /* ---------- TIRA DE DATOS ---------- */
@@ -141,7 +141,7 @@ window.CONFIG = {
   /* ---------- REGALOS ---------- */
   regalos: {
     titulo: "Regalos",
-    texto: "Tu presencia es el mejor regalo. Si querés hacernos un obsequio, podés dejarlo en el sobre el día del evento.",
+    texto: "Tu presencia es el mejor regalo. Si querés hacerme un obsequio, podés dejarlo en el sobre el día del evento.",
     alias: null,      // ej: "leivi.barmitzva"
     cbu: null,
     titular: null
@@ -150,7 +150,7 @@ window.CONFIG = {
   /* ---------- CONFIRMACIÓN DE ASISTENCIA ---------- */
   rsvp: {
     titulo: "Confirmá tu asistencia",
-    texto: "Te pedimos confirmar antes del 10 de noviembre.",
+    texto: "Te pido que confirmes antes del 10 de noviembre.",
     maxAcompanantes: 6,
 
     // Opción A (por defecto): las confirmaciones llegan por WhatsApp.
