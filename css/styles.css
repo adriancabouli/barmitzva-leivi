@@ -920,15 +920,29 @@ body.visor-abierto .nav{opacity:0;pointer-events:none;transition:opacity .3s eas
    RESPONSIVE
    ============================================================ */
 @media (max-width:1000px){
-  /* En pantallas chicas la barra fija taparia media pantalla:
-     vuelve al flujo normal, arriba de "La celebracion". */
+  /* En pantallas chicas la barra fija taparía media pantalla, así que vuelve
+     al flujo normal. Pero el elemento está escrito al FINAL del HTML —tiene
+     que estarlo para que en escritorio pueda flotar sin que el pie se le
+     dibuje encima— así que al volver al flujo caía después del pie, abajo de
+     todo. Se sube con order, que reordena lo que se ve sin tocar el HTML:
+     va pegada a la portada, que es donde sirve. Es lo primero que uno
+     necesita saber. */
+  body{display:flex;flex-direction:column}
+  .nav{order:0}
+  .hero{order:1}
+  .capitulo--datos{order:2}
+  main{order:3}
+  .pie{order:4}
+
   .capitulo--datos{
     position:static;left:auto;right:auto;bottom:auto;
     padding:clamp(20px,4vh,44px) 0 clamp(40px,7vh,80px);
   }
   .capitulo--datos .wrap{width:min(var(--max),90vw)}
   .capitulo--datos .datos{background:linear-gradient(180deg,rgba(14,53,36,.28),rgba(8,18,4,.3));box-shadow:none}
-  .pie{padding-bottom:clamp(56px,8vh,88px)}
+  /* El margen de abajo existe sólo para que la barra flotante no tape el
+     pie. Acá la barra no flota, así que ese hueco sobra. */
+  .pie{margin-bottom:0;padding-bottom:clamp(56px,8vh,88px)}
 
   .datos{grid-template-columns:repeat(2,1fr)}
   .dato:nth-child(3)::before{display:none}
