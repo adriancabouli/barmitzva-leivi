@@ -5,12 +5,12 @@
 :root{
   /* Verdes — el verde es un MATERIAL, no un color plano:
      estos tonos se combinan en capas para dar profundidad. */
-  --verde-950:#050C02;
-  --verde-900:#081204;
-  --verde-800:#0C1A06;
-  --verde-700:#12260A;
-  --verde-600:#19350E;
-  --verde-500:#214513;
+  --verde-950:#071103;
+  --verde-900:#0B1906;
+  --verde-800:#112408;
+  --verde-700:#19340E;
+  --verde-600:#224913;
+  --verde-500:#2E5F1A;
 
   /* Dorados */
   --oro-200:#FFF3CE;
@@ -35,6 +35,12 @@
 
   --max:1280px;
   --marco:25px;                     /* separación del filete al borde */
+  /* Cuánto muerde la contracurva de la esquina. Proporcional a propósito:
+     un valor fijo que se ve bien en el escritorio se come el ancho útil en
+     un teléfono, y uno que anda en el teléfono se pierde en una pantalla
+     grande. Con esto es la misma esquina en los dos lados. */
+  --curva:clamp(22px,3.4vw,52px);
+  --curva-dentro:-6px;              /* el segundo filete, 6px más al centro */
   --nav:92px;                       /* alto real del header, lo mide main.js */
   --aire:clamp(24px,5vh,64px);      /* aire base arriba y abajo del hero */
   --optico:clamp(12px,2.4vh,32px);  /* el centro óptico está por encima del
@@ -83,7 +89,7 @@ p{margin:0 0 1em}
 .fondo::before{
   content:"";position:absolute;inset:0;
   background:
-    radial-gradient(58% 44% at 50% 26%, #142C0B 0%, transparent 62%),
+    radial-gradient(58% 44% at 50% 26%, #1C3D0F 0%, transparent 62%),
     radial-gradient(90% 70% at 50% 45%, var(--verde-700) 0%, transparent 70%),
     radial-gradient(120% 100% at 50% 50%, transparent 26%, #000 100%),
     var(--verde-800);
@@ -95,8 +101,8 @@ p{margin:0 0 1em}
   width:min(190vw,2200px);aspect-ratio:1;
   transform:translate(-50%,-50%);
   background:radial-gradient(circle,
-    rgba(46,92,28,.34) 0%, rgba(46,92,28,.2) 26%,
-    rgba(46,92,28,.09) 50%, transparent 76%);
+    rgba(63,127,39,.34) 0%, rgba(63,127,39,.2) 26%,
+    rgba(63,127,39,.09) 50%, transparent 76%);
   animation:respirar 11s ease-in-out infinite;
 }
 @keyframes respirar{
@@ -154,14 +160,89 @@ p{margin:0 0 1em}
 .marco-pagina::before{
   content:"";position:absolute;inset:var(--marco);
   border:.5px solid var(--linea-oro);
-  border-radius:clamp(16px,2vw,30px);
+  border-radius:0;                 /* la esquina la hacen las .esquina */
   box-shadow:0 0 0 100vmax var(--verde-950),0 0 30px rgba(224,169,63,.07);
 }
 /* Segundo filete, apenas más adentro */
 .marco-pagina::after{
   content:"";position:absolute;inset:calc(var(--marco) + 6px);
   border:.5px solid rgba(224,169,63,.13);
-  border-radius:clamp(12px,1.6vw,24px);
+  border-radius:0;
+}
+
+/* ------------------------------------------------------------
+   LA CONTRACURVA DE LAS ESQUINAS
+
+   Dibujar la curva nunca fue el problema. El problema es que el marco
+   hace DOS cosas a la vez: la línea dorada y tapar el contenido que
+   scrollea por detrás. Con border-radius las dos salían de la misma
+   propiedad —y border-radius sólo curva hacia afuera—, así que apenas
+   la esquina se metía para adentro, línea y máscara dejaban de
+   coincidir. Ahí es donde quedaba mal.
+
+   La salida es una pieza cuadrada en cada esquina que resuelve las dos
+   con lo mismo: se le redondea al 100% la esquina DIAGONALMENTE
+   OPUESTA. Eso deja un arco centrado justo en el vértice del marco
+   —que es exactamente la contracurva— y con esa misma forma recorta el
+   fondo opaco de la pieza. El fondo tapa, el borde dibuja.
+
+   Dos bordes por pieza y no cuatro: en una esquina redondeada al 100%
+   los dos lados se funden en el arco y los otros dos miden cero.
+   ------------------------------------------------------------ */
+.esquina{
+  /* z-index porque el ::after del padre —el segundo filete— se pinta
+     DESPUÉS de los hijos, y si no, el vértice cuadrado del marco
+     asoma por encima de la pieza que tenía que taparlo. */
+  position:absolute;z-index:1;
+  width:var(--curva);height:var(--curva);
+  background:var(--verde-950);
+  border-style:solid;border-color:var(--linea-oro);border-width:0;
+}
+/* El segundo filete acompaña la curva, un poco más adentro */
+.esquina::before{
+  content:"";position:absolute;
+  border-radius:inherit;
+  border-style:solid;border-color:rgba(224,169,63,.13);border-width:0;
+}
+
+.esquina--si{                                   /* superior izquierda */
+  top:var(--marco);left:var(--marco);
+  border-radius:0 0 100% 0;
+  border-right-width:.5px;border-bottom-width:.5px;
+}
+.esquina--si::before{
+  inset:0 var(--curva-dentro) var(--curva-dentro) 0;
+  border-right-width:.5px;border-bottom-width:.5px;
+}
+
+.esquina--sd{                                   /* superior derecha */
+  top:var(--marco);right:var(--marco);
+  border-radius:0 0 0 100%;
+  border-left-width:.5px;border-bottom-width:.5px;
+}
+.esquina--sd::before{
+  inset:0 0 var(--curva-dentro) var(--curva-dentro);
+  border-left-width:.5px;border-bottom-width:.5px;
+}
+
+.esquina--ii{                                   /* inferior izquierda */
+  bottom:var(--marco);left:var(--marco);
+  border-radius:0 100% 0 0;
+  border-top-width:.5px;border-right-width:.5px;
+}
+.esquina--ii::before{
+  inset:var(--curva-dentro) var(--curva-dentro) 0 0;
+  border-top-width:.5px;border-right-width:.5px;
+}
+
+.esquina--id{                                   /* inferior derecha */
+  bottom:var(--marco);right:var(--marco);
+  border-radius:100% 0 0 0;
+  border-top-width:.5px;border-left-width:.5px;
+}
+.esquina--id::before{
+  inset:var(--curva-dentro) 0 0 var(--curva-dentro);
+  border-top-width:.5px;border-left-width:.5px;
 }
 
 /* ============================================================
@@ -458,7 +539,7 @@ p{margin:0 0 1em}
    fondo, borde dorado marcado y sombra. Con el mismo tono del fondo
    se fundía y no parecía flotar. */
 .capitulo--datos .datos{
-  background:linear-gradient(180deg,#080F05 0%,#0B1706 60%,#081104 100%);
+  background:linear-gradient(180deg,#0B1507 0%,#0F2008 60%,#0B1706 100%);
   border:1px solid rgba(224,169,63,.55);
   border-radius:14px;
   box-shadow:
@@ -882,8 +963,8 @@ body.visor-abierto .nav{opacity:0;pointer-events:none;transition:opacity .3s eas
   :root{--marco:14px}
   .wrap{width:min(var(--max),84vw)}
   .wrap--angosto{width:84vw}
-  .marco-pagina::before{border-radius:14px}
-  .marco-pagina::after{inset:calc(var(--marco) + 5px);border-radius:10px}
+  .marco-pagina::after{inset:calc(var(--marco) + 5px)}
+  :root{--curva-dentro:-5px}
 
   /* Tarjetas menos altas: en pantalla chica ocupaban de más */
   .tarjeta{padding:clamp(26px,7vw,34px) clamp(16px,4.5vw,24px)}
