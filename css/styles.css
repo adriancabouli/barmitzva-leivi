@@ -35,11 +35,11 @@
 
   --max:1280px;
   --marco:25px;                     /* separación del filete al borde */
-  /* Cuánto muerde la contracurva de la esquina. Proporcional a propósito:
-     un valor fijo que se ve bien en el escritorio se come el ancho útil en
-     un teléfono, y uno que anda en el teléfono se pierde en una pantalla
-     grande. Con esto es la misma esquina en los dos lados. */
-  --curva:20px;
+  /* Cuánto muerde la contracurva de la esquina: 15px en el teléfono, 20px en
+     pantalla grande, y el paso entre los dos es gradual. Se probó bastante
+     más grande y gritaba: a este tamaño se lee como un detalle y no como un
+     efecto. */
+  --curva:clamp(15px,1.6vw,20px);
   --curva-dentro:-6px;              /* el segundo filete, 6px más al centro */
   --nav:92px;                       /* alto real del header, lo mide main.js */
   --aire:clamp(24px,5vh,64px);      /* aire base arriba y abajo del hero */
