@@ -480,6 +480,11 @@ p{margin:0 0 1em}
 }
 
 .hero__cta{margin-inline:auto}
+/* En escritorio el botón colgaba del contador con unos 20px de aire y se leía
+   como parte de él. Sólo acá: en pantalla chica el alto ya viene justo. */
+@media (min-width:1001px){
+  .hero__cta{margin-top:clamp(14px,2.6vh,32px)}
+}
 
 /* ============================================================
    BOTONES
