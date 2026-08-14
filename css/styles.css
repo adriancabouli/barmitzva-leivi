@@ -936,6 +936,10 @@ body.visor-abierto .nav{opacity:0;pointer-events:none;transition:opacity .3s eas
 
   .capitulo--datos{
     position:static;left:auto;right:auto;bottom:auto;
+    /* El z-index:1000 es de la barra flotante de escritorio. Con position
+       static estaria dormido, PERO acá el body es flex y en un item flex el
+       z-index se aplica igual: quedaba por encima del header. */
+    z-index:1;
     padding:clamp(20px,4vh,44px) 0 clamp(40px,7vh,80px);
   }
   .capitulo--datos .wrap{width:min(var(--max),90vw)}
