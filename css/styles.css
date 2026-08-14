@@ -1000,7 +1000,12 @@ body.visor-abierto .nav{opacity:0;pointer-events:none;transition:opacity .3s eas
     background:linear-gradient(180deg,transparent,var(--linea-oro) 22%,var(--linea-oro) 78%,transparent);
   }
 
+  /* En una sola columna, alineado a la izquierda queda todo el bloque
+     escorado y con un vacío enorme a la derecha. Centrado, el ícono y el
+     texto se leen como una unidad. */
   .datos{grid-template-columns:1fr}
+  .dato{justify-content:center}
+  .dato__txt{text-align:center}
   .dato + .dato::before{display:none}
   .dato + .dato{border-top:1px solid var(--linea-oro)}
   .dato:nth-child(3),.dato:nth-child(4){border-top:1px solid var(--linea-oro)}
