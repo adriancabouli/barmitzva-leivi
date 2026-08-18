@@ -28,8 +28,9 @@ secciones: {
 
 ### Fotos
 
-Las de ahora son de muestra (`img/galeria/demo-*.svg`).
-Poné las reales en `img/galeria/` y cambiá los `src` en `config.js`:
+Las de ahora son las reales de Leivi (`img/galeria/foto-*.jpeg`).
+Para agregar o cambiar: poné el archivo en `img/galeria/` y sumá o editá su
+entrada en `galeria.fotos` de `config.js`:
 
 ```js
 { src: "img/galeria/foto-1.jpg", alt: "Leivi" }
@@ -78,11 +79,14 @@ Los horarios de cada versión se editan en `js/config.js`, en `programa.ceremoni
 
 ## Las fotos de Leivi
 
-Las de ahora son de muestra. Para poner las reales:
+Ya están las reales (`foto-1` a `foto-3`). Para agregar más:
 
-1. Guardá las fotos en `img/galeria/` (por ejemplo `foto-1.jpg`, `foto-2.jpg`, …).
-2. En `js/config.js`, cambiá cada `src` de `galeria.fotos` por el nombre real.
-3. Commit y push.
+1. Guardá la foto en `img/galeria/` siguiendo la numeración (`foto-4.jpeg`, …).
+2. En `js/config.js`, agregá su entrada en `galeria.fotos` con el `src` y el `alt`
+   (el `alt` es además el pie que se ve abajo de la foto).
+3. Las originales sin comprimir quedan en `img/_originales/`, por si hay que
+   volver a exportarlas.
+4. Commit y push.
 
 Conviene achicarlas a ~1200px de ancho antes de subirlas, así el sitio carga rápido en el celular.
 

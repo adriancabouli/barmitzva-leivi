@@ -11,7 +11,7 @@ window.CONFIG = {
     datos:     true,   // tira de fecha / horario / lugar / dress code
     programa:  true,   // la celebración: ceremonia, recepción, fiesta
     lugar:     true,   // mapa
-    galeria:   true,   // fotos (ahora DEMO, reemplazar por las de Leivi)
+    galeria:   true,   // fotos de Leivi (las reales, en img/galeria/)
     rsvp:      true,   // confirmar asistencia
     regalos:   false,
     hashtag:   false
