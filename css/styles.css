@@ -986,6 +986,11 @@ body.visor-abierto .nav{opacity:0;pointer-events:none;transition:opacity .3s eas
   :root{--marco:14px}
   .wrap{width:min(var(--max),84vw)}
   .wrap--angosto{width:84vw}
+  /* Que la tira de datos y el header arranquen en el MISMO margen lateral
+     que las tarjetas: se alinean con la misma fórmula, no con un número
+     copiado, así siguen coincidiendo si algún día cambia el ancho. */
+  .capitulo--datos .wrap{width:min(var(--max),84vw)}
+  .nav__inner{width:min(var(--max),84vw)}
   .marco-pagina::after{inset:calc(var(--marco) + 5px)}
   :root{--curva-dentro:-5px}
 
