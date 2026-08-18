@@ -1014,12 +1014,16 @@ body.visor-abierto .nav{opacity:0;pointer-events:none;transition:opacity .3s eas
     background:linear-gradient(180deg,transparent,var(--linea-oro) 22%,var(--linea-oro) 78%,transparent);
   }
 
-  /* En una sola columna, alineado a la izquierda queda todo el bloque
-     escorado y con un vacío enorme a la derecha. Centrado, el ícono y el
-     texto se leen como una unidad. */
+  /* En una sola columna hay que resolver dos cosas a la vez: si se alinea
+     todo a la izquierda queda escorado con un vacío grande a la derecha, y
+     si se centra cada fila por separado los íconos caen cada uno en un lugar
+     distinto y se ve una escalera.
+     La salida es fijarle el ancho al texto: así todas las filas miden lo
+     mismo, los íconos quedan alineados entre sí, el texto arranca siempre en
+     la misma columna, y el bloque entero va centrado en la tarjeta. */
   .datos{grid-template-columns:1fr}
   .dato{justify-content:center}
-  .dato__txt{text-align:center}
+  .dato__txt{text-align:left;width:min(200px,54vw)}
   .dato + .dato::before{display:none}
   .dato + .dato{border-top:1px solid var(--linea-oro)}
   .dato:nth-child(3),.dato:nth-child(4){border-top:1px solid var(--linea-oro)}
