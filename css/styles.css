@@ -719,18 +719,6 @@ p{margin:0 0 1em}
 .foto:hover .foto__lupa{opacity:1;transform:scale(1)}
 
 /* Pie de foto */
-.foto__pie{
-  position:absolute;z-index:3;left:0;right:0;bottom:0;
-  padding:0 16px 15px;
-  font-family:var(--f-titulo);font-size:.6rem;
-  letter-spacing:.2em;text-transform:uppercase;
-  color:var(--crema);text-align:center;
-  text-shadow:0 1px 12px rgba(0,0,0,.9);
-  opacity:0;transform:translateY(8px);
-  transition:opacity .5s ease,transform .5s ease;
-  pointer-events:none;
-}
-.foto:hover .foto__pie{opacity:1;transform:none}
 
 /* ---- Formulario ---- */
 .form{margin-top:clamp(34px,5vh,52px);display:grid;gap:1.7em}

@@ -57,7 +57,7 @@ window.CONFIG = {
       "Llegó el día en que asumo mis mitzvot y celebro mi entrada a la vida adulta judía.",
       "Me encantaría que estés presente para compartir este momento conmigo."
     ],
-    firma: "Leivi"
+    firma: "Leivi y familia"
   },
 
   /* ---------- TIRA DE DATOS ---------- */

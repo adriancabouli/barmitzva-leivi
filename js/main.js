@@ -178,35 +178,25 @@
   var timer = setInterval(tick, 1000);
   tick();
 
-  /* ---------- Agendar en el calendario (.ics) ---------- */
-  var ics = (function () {
-    // La ceremonia es a la mañana. Para los invitados a la fiesta el
-    // evento del calendario abarca todo el día; para el resto, 3 horas.
-    var fin = conFiesta
-      ? new Date(fecha.getTime() + 14 * 3600 * 1000)
-      : new Date(fecha.getTime() + 3 * 3600 * 1000);
-    var fmt = function (d) {
-      return d.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
-    };
-    var lugarTxt = [get('lugar.nombre'), get('lugar.direccion')].filter(Boolean).join(', ');
-    return [
-      'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//barmitzva//ES',
-      'BEGIN:VEVENT',
-      'UID:' + Date.now() + '@barmitzva',
-      'DTSTAMP:' + fmt(new Date()),
-      'DTSTART:' + fmt(fecha),
-      'DTEND:' + fmt(fin),
-      'SUMMARY:' + C.evento + ' de ' + C.nombre,
-      'LOCATION:' + lugarTxt,
-      'END:VEVENT', 'END:VCALENDAR'
-    ].join('\r\n');
-  })();
+  /* ---------- Agendar en el calendario ----------
+     Apunta a un archivo .ics REAL del sitio, no a un data: URL.
 
+     Antes se armaba el .ics en el momento y se metía en un
+     data:text/calendar con el atributo download. En una computadora
+     funciona; en el iPhone no hace absolutamente nada — Safari no navega
+     a data: URLs desde un link y tampoco respeta download ahí. El botón
+     quedaba muerto justo en el dispositivo donde lo va a tocar casi
+     todo el mundo.
+
+     Con un archivo servido por el sitio, Safari lo abre y ofrece
+     agregarlo al calendario, y en escritorio se baja como siempre. Sin
+     download: si se lo pone, iOS vuelve a no hacer nada.
+
+     Son dos archivos porque el evento dura distinto según la invitación:
+     3 horas la ceremonia, y hasta la noche para los de la fiesta.       */
   ['btn-calendario', 'nav-agendar'].forEach(function (id) {
     var b = document.getElementById(id);
-    if (!b) return;
-    b.href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics);
-    b.setAttribute('download', C.nombre.toLowerCase() + '.ics');
+    if (b) b.href = conFiesta ? 'leivi-fiesta.ics' : 'leivi.ics';
   });
 
   /* ---------- Mapa ---------- */
@@ -228,7 +218,6 @@
         '<span class="foto__lupa"><svg viewBox="0 0 24 24" aria-hidden="true">' +
           '<circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.4 15.4L21 21"/>' +
         '</svg></span>' +
-        '<span class="foto__pie">' + f.alt + '</span>' +
         '</button>';
     }).join('');
   }
