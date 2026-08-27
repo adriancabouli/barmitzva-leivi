@@ -27,7 +27,7 @@ window.CONFIG = {
   marca: "Leivi",
 
   // Fecha y hora del evento (ISO, huso horario de Argentina)
-  fechaISO: "2026-12-10T09:00:00-03:00",
+  fechaISO: "2026-12-10T10:00:00-03:00",
   fechaPunteada: "10 · 12 · 2026",
   fechaLarga: "Jueves 10 de diciembre de 2026",
 
@@ -63,7 +63,7 @@ window.CONFIG = {
   /* ---------- TIRA DE DATOS ---------- */
   datos: [
     { icono: "calendario", titulo: "Fecha",      l1: "Jueves 10 de diciembre", l2: "de 2026" },
-    { icono: "reloj",      titulo: "Horario",    l1: "09:00 hs",               l2: "Puntual" },
+    { icono: "reloj",      titulo: "Horario",    l1: "10:00 hs",               l2: "Puntual" },
     { icono: "pin",        titulo: "Lugar",      l1: "Jabad Lubavitch",        l2: "Córdoba" },
     { icono: "mono",       titulo: "Dress code", l1: "Traje formal",           l2: "Elegante" }
   ],
@@ -84,7 +84,7 @@ window.CONFIG = {
       {
         icono: "estrella",
         titulo: "Ceremonia",
-        hora: "09:00 hs",
+        hora: "10:00 hs",
         lugar: "Jabad Lubavitch Córdoba",
         detalle: "Colocación de tefilín y lectura de la Torá."
       }
@@ -95,7 +95,7 @@ window.CONFIG = {
       {
         icono: "estrella",
         titulo: "Ceremonia",
-        hora: "09:00 hs",
+        hora: "10:00 hs",
         lugar: "Jabad Lubavitch Córdoba",
         detalle: "Colocación de tefilín y lectura de la Torá."
       },
