@@ -65,7 +65,7 @@ window.CONFIG = {
     { icono: "calendario", titulo: "Fecha",      l1: "Jueves 10 de diciembre", l2: "de 2026" },
     { icono: "reloj",      titulo: "Horario",    l1: "09:00 hs",               l2: "Puntual" },
     { icono: "pin",        titulo: "Lugar",      l1: "Jabad Lubavitch",        l2: "Córdoba" },
-    { icono: "mono",       titulo: "Dress code", l1: "Traje formal",           l2: "Elegante" }
+    { icono: "mono",       titulo: "Dress code", l1: "Formal",                 l2: "" }
   ],
 
   /* ---------- LA CELEBRACIÓN ----------
