@@ -402,21 +402,16 @@
       msg.className = 'form__msg';
       msg.textContent = '';
 
+      // La columna "Asiste" de la planilla dice a qué viene: Ceremonia,
+      // Fiesta, Ambos o No. El link sin ?fiesta sólo invita a la ceremonia.
+      var viene = form.elements.asistencia.value !== 'No';
       var datos = {
         nombre: form.elements.nombre.value.trim(),
         contacto: form.elements.contacto.value.trim(),
-        asistencia: form.elements.asistencia.value,
-        cantidad: form.elements.asistencia.value === 'No' ? 0 : form.elements.cantidad.value,
-        evento: form.elements.asistencia.value === 'No' ? ''
-          : (conFiesta ? form.elements.evento.value : 'Ceremonia'),
+        asistencia: !viene ? 'No' : (conFiesta ? form.elements.evento.value : 'Ceremonia'),
+        cantidad: viene ? form.elements.cantidad.value : 0,
         mensaje: form.elements.mensaje.value.trim()
       };
-
-      // La planilla publicada sólo guarda hasta la columna Mensaje, así que
-      // a qué viene (Ceremonia / Fiesta / Ambos) va adelante del mensaje.
-      if (datos.evento) {
-        datos.mensaje = '[' + datos.evento + ']' + (datos.mensaje ? ' ' + datos.mensaje : '');
-      }
 
       if (!datos.nombre || !datos.contacto) {
         msg.className = 'form__msg error';
@@ -454,7 +449,7 @@
         'Nombre: ' + datos.nombre + '\n' +
         'Contacto: ' + datos.contacto + '\n' +
         'Asiste: ' + datos.asistencia + '\n' +
-        (datos.asistencia === 'Sí' ? 'Cantidad: ' + datos.cantidad + '\n' : '') +
+        (datos.asistencia !== 'No' ? 'Cantidad: ' + datos.cantidad + '\n' : '') +
         (datos.mensaje ? 'Mensaje: ' + datos.mensaje : '');
 
       window.open('https://wa.me/' + get('rsvp.whatsapp') + '?text=' + encodeURIComponent(texto), '_blank');

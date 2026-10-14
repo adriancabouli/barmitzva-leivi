@@ -58,7 +58,7 @@ Entrá al sitio, completá el formulario con datos de prueba y fijate que aparez
 
 ## Ponerla linda
 
-La planilla queda con los colores de la invitación: los títulos en verde con letras doradas, las filas alternadas en crema, el "Sí" en verde y el "No" en rojo apagado, la fecha en `dd/MM/aaaa hh:mm` y las columnas que no se usan escondidas.
+La planilla queda con los colores de la invitación: los títulos en verde con letras doradas, las filas alternadas en crema, lo que dice a qué viene (Ceremonia, Fiesta o Ambos) en verde y el "No" en rojo apagado, la fecha en `dd/MM/aaaa hh:mm` y las columnas que no se usan escondidas.
 
 Si tu planilla ya existía de antes, se le aplica en dos toques:
 
@@ -74,18 +74,11 @@ Los colores salen de `css/styles.css` y están arriba de todo del `.gs`, por si 
 En el editor de Apps Script, elegí la función `crearResumen` en el desplegable de arriba y tocá **▶ Ejecutar**. Te crea una hoja **Resumen** con:
 
 - cuántas personas vienen en total
-- cuántas familias confirmaron
+- cuántas van a la ceremonia y cuántas a la fiesta (las de "Ambos" cuentan en las dos)
 - cuántas no pueden
-- cuántas personas van a la ceremonia y cuántas a la fiesta (los que eligieron "Ambos" cuentan en las dos)
 - cuándo fue la última confirmación
 
 Los números se actualizan solos a medida que llegan confirmaciones.
-
-## Columna "Ceremonia / Fiesta"
-
-Los invitados del link con `?fiesta` eligen en el formulario si vienen a la **Ceremonia**, a la **Fiesta** o a **Ambos**; los del link normal quedan como **Ceremonia**. Eso cae en la columna **G**, al final, para no correr las confirmaciones viejas.
-
-Para activarla en una planilla que ya existía: pegá de nuevo el `.gs`, guardá, **volvé a implementar** (ver abajo), y corré `embellecer` y `crearResumen`.
 
 ## Si cambiás el script después
 

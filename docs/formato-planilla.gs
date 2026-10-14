@@ -35,12 +35,9 @@ function embellecer() {
 }
 
 function darleFormato_(hoja) {
-  // Planillas creadas antes de la columna G: se le pone el título
-  if (hoja.getMaxColumns() < 7) hoja.insertColumnsAfter(hoja.getMaxColumns(), 7 - hoja.getMaxColumns());
-  hoja.getRange(1, 7).setValue("Ceremonia / Fiesta");
   var filas = hoja.getMaxRows();
 
-  hoja.getRange(1, 1, filas, 7)
+  hoja.getRange(1, 1, filas, 6)
       .setFontFamily("Georgia")
       .setFontSize(11)
       .setFontColor(F_VERDE_TEXTO)
@@ -48,7 +45,7 @@ function darleFormato_(hoja) {
       .setBorder(true, true, true, true, true, true, F_LINEA, SpreadsheetApp.BorderStyle.SOLID);
 
   // Los títulos, en verde con letras doradas como la portada
-  var cab = hoja.getRange(1, 1, 1, 7);
+  var cab = hoja.getRange(1, 1, 1, 6);
   cab.setFontWeight("bold")
      .setBackground(F_VERDE)
      .setFontColor(F_ORO)
@@ -65,24 +62,23 @@ function darleFormato_(hoja) {
   hoja.setColumnWidth(4, 85);    // Asiste
   hoja.setColumnWidth(5, 95);    // Cantidad
   hoja.setColumnWidth(6, 340);   // Mensaje
-  hoja.setColumnWidth(7, 170);   // Ceremonia / Fiesta / Ambos
 
   if (filas > 1) {
-    var cuerpo = hoja.getRange(2, 1, filas - 1, 7);
+    var cuerpo = hoja.getRange(2, 1, filas - 1, 6);
     hoja.getRange(2, 1, filas - 1, 1)
         .setNumberFormat("dd/MM/yyyy")
         .setHorizontalAlignment("center");
     hoja.getRange(2, 4, filas - 1, 2).setHorizontalAlignment("center");
     hoja.getRange(2, 5, filas - 1, 1).setFontWeight("bold");
     hoja.getRange(2, 6, filas - 1, 1).setWrap(true);
-    hoja.getRange(2, 7, filas - 1, 1).setHorizontalAlignment("center");
 
     // El color va por reglas, no pintando celdas: así las
     // confirmaciones que lleguen mañana salen pintadas solas.
     var colAsiste = hoja.getRange(2, 4, filas - 1, 1);
     hoja.setConditionalFormatRules([
       SpreadsheetApp.newConditionalFormatRule()
-        .whenTextEqualTo("Sí")
+        // Asiste dice a qué viene: Ceremonia, Fiesta o Ambos
+        .whenFormulaSatisfied('=AND($D2<>"";$D2<>"No")')
         .setBackground("#DFF0E3").setFontColor(F_VERDE_CLARO).setBold(true)
         .setRanges([colAsiste]).build(),
       SpreadsheetApp.newConditionalFormatRule()
@@ -99,13 +95,9 @@ function darleFormato_(hoja) {
   // Con los bordes puestos, la cuadrícula de fondo sobra y ensucia
   hoja.setHiddenGridlines(true);
 
-  // Las columnas de la H en adelante no se usan
-  var sobran = hoja.getMaxColumns() - 7;
-  if (sobran > 0) hoja.hideColumns(8, sobran);
+  // Las columnas de la G en adelante no se usan
+  var sobran = hoja.getMaxColumns() - 6;
+  if (sobran > 0) hoja.hideColumns(7, sobran);
 
-  // El filtro tiene que abarcar la columna G: si quedó uno viejo más
-  // angosto, se rehace (sacar el filtro no borra ningún dato)
-  var filtro = hoja.getFilter();
-  if (filtro && filtro.getRange().getNumColumns() < 7) { filtro.remove(); filtro = null; }
-  if (!filtro) hoja.getRange(1, 1, filas, 7).createFilter();
+  if (!hoja.getFilter()) hoja.getRange(1, 1, filas, 6).createFilter();
 }
