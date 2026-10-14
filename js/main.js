@@ -138,6 +138,7 @@
 
   if (progEl && listaPrograma) {
     progEl.classList.toggle('programa--uno', listaPrograma.length === 1);
+    progEl.classList.toggle('programa--dos', listaPrograma.length === 2);
     progEl.innerHTML = listaPrograma.map(function (p) {
       return '<article class="tarjeta">' +
         svgIcono(p.icono, 'tarjeta__ico') +
@@ -380,6 +381,10 @@
   var form = document.getElementById('rsvp-form');
   var msg = document.getElementById('form-msg');
   var campoCant = document.getElementById('campo-cantidad');
+  // "¿A qué venís?" sólo tiene sentido para los invitados a la fiesta;
+  // los del link normal están invitados sólo a la ceremonia.
+  var campoEvento = document.getElementById('campo-evento');
+  if (campoEvento) campoEvento.hidden = !conFiesta;
 
   if (form) {
     var maxAc = get('rsvp.maxAcompanantes');
@@ -388,6 +393,7 @@
     form.querySelectorAll('input[name=asistencia]').forEach(function (r) {
       r.addEventListener('change', function () {
         if (campoCant) campoCant.hidden = (form.elements.asistencia.value === 'No');
+        if (campoEvento) campoEvento.hidden = !conFiesta || form.elements.asistencia.value === 'No';
       });
     });
 
@@ -401,6 +407,8 @@
         contacto: form.elements.contacto.value.trim(),
         asistencia: form.elements.asistencia.value,
         cantidad: form.elements.asistencia.value === 'No' ? 0 : form.elements.cantidad.value,
+        evento: form.elements.asistencia.value === 'No' ? ''
+          : (conFiesta ? form.elements.evento.value : 'Ceremonia'),
         mensaje: form.elements.mensaje.value.trim()
       };
 
@@ -426,6 +434,7 @@
           if (ok) {
             form.reset();
             if (campoCant) campoCant.hidden = false;
+            if (campoEvento) campoEvento.hidden = !conFiesta;
             velo('listo', '¡Gracias! Recibimos tu confirmación');
           } else {
             velo('error', 'No pudimos enviarlo. Probá de nuevo en un momento.');
@@ -439,6 +448,7 @@
         'Nombre: ' + datos.nombre + '\n' +
         'Contacto: ' + datos.contacto + '\n' +
         'Asiste: ' + datos.asistencia + '\n' +
+        (datos.asistencia === 'Sí' ? 'Viene a: ' + datos.evento + '\n' : '') +
         (datos.asistencia === 'Sí' ? 'Cantidad: ' + datos.cantidad + '\n' : '') +
         (datos.mensaje ? 'Mensaje: ' + datos.mensaje : '');
 

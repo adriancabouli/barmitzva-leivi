@@ -76,9 +76,16 @@ En el editor de Apps Script, elegí la función `crearResumen` en el desplegable
 - cuántas personas vienen en total
 - cuántas familias confirmaron
 - cuántas no pueden
+- cuántas personas van a la ceremonia y cuántas a la fiesta (los que eligieron "Ambos" cuentan en las dos)
 - cuándo fue la última confirmación
 
 Los números se actualizan solos a medida que llegan confirmaciones.
+
+## Columna "Ceremonia / Fiesta"
+
+Los invitados del link con `?fiesta` eligen en el formulario si vienen a la **Ceremonia**, a la **Fiesta** o a **Ambos**; los del link normal quedan como **Ceremonia**. Eso cae en la columna **G**, al final, para no correr las confirmaciones viejas.
+
+Para activarla en una planilla que ya existía: pegá de nuevo el `.gs`, guardá, **volvé a implementar** (ver abajo), y corré `embellecer` y `crearResumen`.
 
 ## Si cambiás el script después
 

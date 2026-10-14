@@ -604,6 +604,8 @@ p{margin:0 0 1em}
 }
 /* Versión "sólo ceremonia": una tarjeta sola centrada, no estirada */
 .programa--uno{grid-template-columns:minmax(0,440px);justify-content:center}
+/* Versión con fiesta: ceremonia y fiesta, dos tarjetas centradas */
+.programa--dos{grid-template-columns:repeat(2,minmax(0,440px));justify-content:center}
 .tarjeta{
   border:1px solid var(--linea-oro);
   border-radius:6px;
@@ -723,6 +725,7 @@ p{margin:0 0 1em}
 /* ---- Formulario ---- */
 .form{margin-top:clamp(34px,5vh,52px);display:grid;gap:1.7em}
 .campo{display:block}
+.campo[hidden]{display:none}
 .campo > span,.campo legend{
   display:block;padding:0;margin-bottom:.8em;
   font-family:var(--f-titulo);font-size:.64rem;

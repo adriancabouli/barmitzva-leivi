@@ -73,7 +73,7 @@ El mismo sitio sirve para los dos grupos de invitados. Cambia **sólo la secció
 | A quién se lo mandás | Link | Qué muestra |
 |---|---|---|
 | Invitados a la ceremonia | `https://adriancabouli.github.io/barmitzva-leivi/` | Sólo la ceremonia |
-| Invitados a ceremonia y fiesta | `https://adriancabouli.github.io/barmitzva-leivi/?fiesta` | Ceremonia, recepción y fiesta |
+| Invitados a ceremonia y fiesta | `https://adriancabouli.github.io/barmitzva-leivi/?fiesta` | Ceremonia y fiesta (en el formulario eligen: Ceremonia, Fiesta o Ambos) |
 
 Los horarios de cada versión se editan en `js/config.js`, en `programa.ceremonia` y `programa.completa`.
 

@@ -27,7 +27,10 @@ function doPost(e) {
       d.contacto || "",
       d.asistencia || "",
       d.asistencia === "No" ? 0 : (Number(d.cantidad) || 1),
-      d.mensaje || ""
+      d.mensaje || "",
+      // Ceremonia, Fiesta o Ambos. Va al final para no correr las
+      // columnas de las confirmaciones que ya estaban cargadas.
+      d.asistencia === "No" ? "" : (d.evento || "Ceremonia")
     ]);
 
     // La fecha se estampa con su formato acá mismo, en la fila recién
@@ -69,8 +72,11 @@ function obtenerHoja_() {
   }
 
   if (hoja.getLastRow() === 0) {
-    hoja.appendRow(["Fecha", "Nombre", "Contacto", "Asiste", "Cantidad", "Mensaje"]);
+    hoja.appendRow(["Fecha", "Nombre", "Contacto", "Asiste", "Cantidad", "Mensaje", "Ceremonia / Fiesta"]);
     darleFormato_(hoja);
+  } else if (hoja.getRange(1, 7).getValue() === "") {
+    // Planilla de antes de la columna G: se le agrega el título
+    hoja.getRange(1, 7).setValue("Ceremonia / Fiesta");
   }
 
   return hoja;
@@ -89,9 +95,12 @@ function embellecer() {
 }
 
 function darleFormato_(hoja) {
+  // Planillas creadas antes de la columna G: se le pone el título
+  if (hoja.getMaxColumns() < 7) hoja.insertColumnsAfter(hoja.getMaxColumns(), 7 - hoja.getMaxColumns());
+  hoja.getRange(1, 7).setValue("Ceremonia / Fiesta");
   var filas = hoja.getMaxRows();
 
-  hoja.getRange(1, 1, filas, 6)
+  hoja.getRange(1, 1, filas, 7)
       .setFontFamily("Georgia")
       .setFontSize(11)
       .setFontColor(VERDE_TEXTO)
@@ -99,7 +108,7 @@ function darleFormato_(hoja) {
       .setBorder(true, true, true, true, true, true, LINEA, SpreadsheetApp.BorderStyle.SOLID);
 
   // Los títulos, en verde con letras doradas como la portada
-  var cab = hoja.getRange(1, 1, 1, 6);
+  var cab = hoja.getRange(1, 1, 1, 7);
   cab.setFontWeight("bold")
      .setBackground(VERDE)
      .setFontColor(ORO)
@@ -117,15 +126,17 @@ function darleFormato_(hoja) {
   hoja.setColumnWidth(4, 85);    // Asiste
   hoja.setColumnWidth(5, 95);    // Cantidad
   hoja.setColumnWidth(6, 340);   // Mensaje
+  hoja.setColumnWidth(7, 170);   // Ceremonia / Fiesta / Ambos
 
   if (filas > 1) {
-    var cuerpo = hoja.getRange(2, 1, filas - 1, 6);
+    var cuerpo = hoja.getRange(2, 1, filas - 1, 7);
     hoja.getRange(2, 1, filas - 1, 1)
         .setNumberFormat("dd/MM/yyyy")
         .setHorizontalAlignment("center");
     hoja.getRange(2, 4, filas - 1, 2).setHorizontalAlignment("center");
     hoja.getRange(2, 5, filas - 1, 1).setFontWeight("bold");
     hoja.getRange(2, 6, filas - 1, 1).setWrap(true);
+    hoja.getRange(2, 7, filas - 1, 1).setHorizontalAlignment("center");
 
     // El color se pone con reglas, no pintando celdas: así las
     // confirmaciones que lleguen mañana salen pintadas solas.
@@ -149,19 +160,24 @@ function darleFormato_(hoja) {
   // Con los bordes puestos, la cuadrícula de fondo sobra y ensucia
   hoja.setHiddenGridlines(true);
 
-  // Las columnas de la G en adelante no se usan: ocultarlas hace que
+  // Las columnas de la H en adelante no se usan: ocultarlas hace que
   // la hoja se lea como una tarjeta y no como una planilla infinita
-  var sobran = hoja.getMaxColumns() - 6;
-  if (sobran > 0) hoja.hideColumns(7, sobran);
+  var sobran = hoja.getMaxColumns() - 7;
+  if (sobran > 0) hoja.hideColumns(8, sobran);
 
-  if (!hoja.getFilter()) hoja.getRange(1, 1, filas, 6).createFilter();
+  // El filtro tiene que abarcar la columna G: si quedó uno viejo más
+  // angosto, se rehace (sacar el filtro no borra ningún dato)
+  var filtro = hoja.getFilter();
+  if (filtro && filtro.getRange().getNumColumns() < 7) { filtro.remove(); filtro = null; }
+  if (!filtro) hoja.getRange(1, 1, filas, 7).createFilter();
 }
 
 /* Aviso por mail, sólo si cargaste MI_MAIL */
 function avisar_(d, cuando) {
   if (!MI_MAIL) return;
 
-  var viene = d.asistencia === "No" ? "NO viene" : "viene (" + (d.cantidad || 1) + ")";
+  var viene = d.asistencia === "No" ? "NO viene"
+    : "viene (" + (d.cantidad || 1) + ") a " + (d.evento || "Ceremonia");
 
   // Fecha sola, sin hora, en el huso de la planilla — si se usa el del
   // servidor de Google, una confirmación de la noche puede aparecer con
@@ -206,15 +222,25 @@ function crearResumen() {
   hoja.getRange("A5").setValue("No pueden venir");
   hoja.getRange("B5").setFormula('=COUNTIF(Confirmaciones!D:D;"No")');
 
-  hoja.getRange("A7").setValue("Última confirmación");
-  hoja.getRange("B7").setFormula('=IFERROR(MAX(Confirmaciones!A:A);"—")')
+  hoja.getRange("A7").setValue("Personas a la ceremonia");
+  hoja.getRange("B7").setFormula(
+    '=SUMIFS(Confirmaciones!E:E;Confirmaciones!D:D;"Sí";Confirmaciones!G:G;"Ceremonia")' +
+    '+SUMIFS(Confirmaciones!E:E;Confirmaciones!D:D;"Sí";Confirmaciones!G:G;"Ambos")');
+
+  hoja.getRange("A8").setValue("Personas a la fiesta");
+  hoja.getRange("B8").setFormula(
+    '=SUMIFS(Confirmaciones!E:E;Confirmaciones!D:D;"Sí";Confirmaciones!G:G;"Fiesta")' +
+    '+SUMIFS(Confirmaciones!E:E;Confirmaciones!D:D;"Sí";Confirmaciones!G:G;"Ambos")');
+
+  hoja.getRange("A10").setValue("Última confirmación");
+  hoja.getRange("B10").setFormula('=IFERROR(MAX(Confirmaciones!A:A);"—")')
       .setNumberFormat("dd/MM/yyyy");
 
-  hoja.getRange("A3:A7").setFontWeight("bold");
+  hoja.getRange("A3:A10").setFontWeight("bold");
   hoja.setColumnWidth(1, 220);
 
   // Mismos colores que la hoja de confirmaciones
-  hoja.getRange(1, 1, 8, 2)
+  hoja.getRange(1, 1, 11, 2)
       .setFontFamily("Georgia").setFontSize(11).setFontColor(VERDE_TEXTO)
       .setVerticalAlignment("middle");
 
@@ -224,14 +250,16 @@ function crearResumen() {
   try { titulo.setFontFamily("Cinzel"); } catch (e) {}
   hoja.setRowHeight(1, 40);
 
-  hoja.getRange("B3:B7")
+  hoja.getRange("B3:B10")
       .setFontWeight("bold").setFontSize(13).setFontColor(VERDE_CLARO)
       .setHorizontalAlignment("center");
   hoja.setColumnWidth(2, 150);
 
   hoja.getRange("A3:B5").setBorder(
     true, true, true, true, true, true, LINEA, SpreadsheetApp.BorderStyle.SOLID);
-  hoja.getRange("A7:B7").setBorder(
+  hoja.getRange("A7:B8").setBorder(
+    true, true, true, true, true, true, LINEA, SpreadsheetApp.BorderStyle.SOLID);
+  hoja.getRange("A10:B10").setBorder(
     true, true, true, true, true, true, LINEA, SpreadsheetApp.BorderStyle.SOLID);
 
   hoja.setHiddenGridlines(true);

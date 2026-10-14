@@ -9,7 +9,7 @@ window.CONFIG = {
      Poné true / false para prender o apagar cada bloque.       */
   secciones: {
     datos:     true,   // tira de fecha / horario / lugar / dress code
-    programa:  true,   // la celebración: ceremonia, recepción, fiesta
+    programa:  true,   // la celebración: ceremonia y fiesta
     lugar:     true,   // mapa
     galeria:   true,   // fotos de Leivi (las reales, en img/galeria/)
     rsvp:      true,   // confirmar asistencia
@@ -100,16 +100,9 @@ window.CONFIG = {
         detalle: "Colocación de tefilín y lectura de Torá.<br>Seguido de lejaim"
       },
       {
-        icono: "copa",
-        titulo: "Recepción",
-        hora: "20:30 hs",
-        lugar: "Salón (completar)",
-        detalle: "Cóctel de bienvenida."
-      },
-      {
         icono: "musica",
         titulo: "Fiesta",
-        hora: "21:30 hs",
+        hora: "19:30 hs",
         lugar: "Salón (completar)",
         detalle: "Cena, música y baile hasta el final."
       }
