@@ -132,7 +132,7 @@ function darleFormato_(hoja) {
     var colAsiste = hoja.getRange(2, 4, filas - 1, 1);
     hoja.setConditionalFormatRules([
       SpreadsheetApp.newConditionalFormatRule()
-        // Asiste dice a qué viene: Ceremonia, Fiesta o Ambos
+        // Asiste dice a qué viene: Ceremonia, Fiesta o Ceremonia y fiesta
         .whenFormulaSatisfied('=AND($D2<>"";$D2<>"No")')
         .setBackground("#DFF0E3").setFontColor(VERDE_CLARO).setBold(true)
         .setRanges([colAsiste]).build(),
@@ -199,15 +199,15 @@ function crearResumen() {
 
   hoja.getRange("A1").setValue("Resumen de confirmaciones").setFontWeight("bold");
 
-  // "Asiste" dice Ceremonia, Fiesta, Ambos o No
+  // "Asiste" dice Ceremonia, Fiesta, Ceremonia y fiesta o No
   hoja.getRange("A3").setValue("Personas que vienen");
   hoja.getRange("B3").setFormula('=SUMIFS(Confirmaciones!E2:E;Confirmaciones!D2:D;"<>No";Confirmaciones!D2:D;"<>")');
 
   hoja.getRange("A4").setValue("A la ceremonia");
-  hoja.getRange("B4").setFormula('=SUMIF(Confirmaciones!D:D;"Ceremonia";Confirmaciones!E:E)+SUMIF(Confirmaciones!D:D;"Ambos";Confirmaciones!E:E)');
+  hoja.getRange("B4").setFormula('=SUMIF(Confirmaciones!D:D;"Ceremonia";Confirmaciones!E:E)+SUMIF(Confirmaciones!D:D;"Ceremonia y fiesta";Confirmaciones!E:E)');
 
   hoja.getRange("A5").setValue("A la fiesta");
-  hoja.getRange("B5").setFormula('=SUMIF(Confirmaciones!D:D;"Fiesta";Confirmaciones!E:E)+SUMIF(Confirmaciones!D:D;"Ambos";Confirmaciones!E:E)');
+  hoja.getRange("B5").setFormula('=SUMIF(Confirmaciones!D:D;"Fiesta";Confirmaciones!E:E)+SUMIF(Confirmaciones!D:D;"Ceremonia y fiesta";Confirmaciones!E:E)');
 
   hoja.getRange("A6").setValue("No pueden venir");
   hoja.getRange("B6").setFormula('=COUNTIF(Confirmaciones!D:D;"No")');

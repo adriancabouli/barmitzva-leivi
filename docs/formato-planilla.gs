@@ -77,7 +77,7 @@ function darleFormato_(hoja) {
     var colAsiste = hoja.getRange(2, 4, filas - 1, 1);
     hoja.setConditionalFormatRules([
       SpreadsheetApp.newConditionalFormatRule()
-        // Asiste dice a qué viene: Ceremonia, Fiesta o Ambos
+        // Asiste dice a qué viene: Ceremonia, Fiesta o Ceremonia y fiesta
         .whenFormulaSatisfied('=AND($D2<>"";$D2<>"No")')
         .setBackground("#DFF0E3").setFontColor(F_VERDE_CLARO).setBold(true)
         .setRanges([colAsiste]).build(),

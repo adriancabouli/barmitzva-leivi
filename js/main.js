@@ -403,7 +403,7 @@
       msg.textContent = '';
 
       // La columna "Asiste" de la planilla dice a qué viene: Ceremonia,
-      // Fiesta, Ambos o No. El link sin ?fiesta sólo invita a la ceremonia.
+      // Fiesta, Ceremonia y fiesta o No. El link sin ?fiesta sólo invita a la ceremonia.
       var viene = form.elements.asistencia.value !== 'No';
       var datos = {
         nombre: form.elements.nombre.value.trim(),

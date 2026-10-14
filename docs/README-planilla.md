@@ -58,7 +58,7 @@ Entrá al sitio, completá el formulario con datos de prueba y fijate que aparez
 
 ## Ponerla linda
 
-La planilla queda con los colores de la invitación: los títulos en verde con letras doradas, las filas alternadas en crema, lo que dice a qué viene (Ceremonia, Fiesta o Ambos) en verde y el "No" en rojo apagado, la fecha en `dd/MM/aaaa hh:mm` y las columnas que no se usan escondidas.
+La planilla queda con los colores de la invitación: los títulos en verde con letras doradas, las filas alternadas en crema, lo que dice a qué viene (Ceremonia, Fiesta o Ceremonia y fiesta) en verde y el "No" en rojo apagado, la fecha en `dd/MM/aaaa hh:mm` y las columnas que no se usan escondidas.
 
 Si tu planilla ya existía de antes, se le aplica en dos toques:
 
@@ -74,7 +74,7 @@ Los colores salen de `css/styles.css` y están arriba de todo del `.gs`, por si 
 En el editor de Apps Script, elegí la función `crearResumen` en el desplegable de arriba y tocá **▶ Ejecutar**. Te crea una hoja **Resumen** con:
 
 - cuántas personas vienen en total
-- cuántas van a la ceremonia y cuántas a la fiesta (las de "Ambos" cuentan en las dos)
+- cuántas van a la ceremonia y cuántas a la fiesta (las de "Ceremonia y fiesta" cuentan en las dos)
 - cuántas no pueden
 - cuándo fue la última confirmación
 
