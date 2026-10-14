@@ -412,6 +412,12 @@
         mensaje: form.elements.mensaje.value.trim()
       };
 
+      // La planilla publicada sólo guarda hasta la columna Mensaje, así que
+      // a qué viene (Ceremonia / Fiesta / Ambos) va adelante del mensaje.
+      if (datos.evento) {
+        datos.mensaje = '[' + datos.evento + ']' + (datos.mensaje ? ' ' + datos.mensaje : '');
+      }
+
       if (!datos.nombre || !datos.contacto) {
         msg.className = 'form__msg error';
         msg.textContent = 'Completá tu nombre y un contacto, por favor.';
@@ -448,7 +454,6 @@
         'Nombre: ' + datos.nombre + '\n' +
         'Contacto: ' + datos.contacto + '\n' +
         'Asiste: ' + datos.asistencia + '\n' +
-        (datos.asistencia === 'Sí' ? 'Viene a: ' + datos.evento + '\n' : '') +
         (datos.asistencia === 'Sí' ? 'Cantidad: ' + datos.cantidad + '\n' : '') +
         (datos.mensaje ? 'Mensaje: ' + datos.mensaje : '');
 
