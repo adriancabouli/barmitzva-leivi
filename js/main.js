@@ -381,7 +381,7 @@
   var form = document.getElementById('rsvp-form');
   var msg = document.getElementById('form-msg');
   var campoCant = document.getElementById('campo-cantidad');
-  // "¿A qué venís?" sólo tiene sentido para los invitados a la fiesta;
+  // "¿A cuál evento?" sólo tiene sentido para los invitados a la fiesta;
   // los del link normal están invitados sólo a la ceremonia.
   var campoEvento = document.getElementById('campo-evento');
   if (campoEvento) campoEvento.hidden = !conFiesta;
