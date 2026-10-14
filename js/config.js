@@ -103,7 +103,7 @@ window.CONFIG = {
         icono: "musica",
         titulo: "Fiesta",
         hora: "19:30 hs",
-        lugar: "Salón (completar)",
+        lugar: "Jabad Lubavitch Córdoba",
         detalle: "Cena, música y baile hasta el final."
       }
     ]
