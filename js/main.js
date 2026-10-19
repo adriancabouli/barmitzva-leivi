@@ -504,16 +504,26 @@
     cont.innerHTML = html;
   }
 
-  /* ---------- Aparición al scrollear ---------- */
-  var obs = new IntersectionObserver(function (entradas) {
-    entradas.forEach(function (en) {
-      if (en.isIntersecting) {
-        en.target.classList.add('visible');
-        obs.unobserve(en.target);
-      }
-    });
-  }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
-  document.querySelectorAll('.reveal').forEach(function (el) { obs.observe(el); });
+  /* ---------- Aparición al scrollear ----------
+     Sin umbral de porcentaje: la galería mide varias pantallas de alto, y
+     pedir que se vea el 10% hacía que en pantallas bajas (el navegador
+     de WhatsApp, letra grande) no apareciera nunca y las fotos quedaran
+     invisibles. Basta con que asome.                                    */
+  var reveals = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var obs = new IntersectionObserver(function (entradas) {
+      entradas.forEach(function (en) {
+        if (en.isIntersecting) {
+          en.target.classList.add('visible');
+          obs.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0, rootMargin: '0px 0px -60px 0px' });
+    reveals.forEach(function (el) { obs.observe(el); });
+  } else {
+    // Navegadores viejos: mostrar todo de una
+    reveals.forEach(function (el) { el.classList.add('visible'); });
+  }
 
   /* ---------- Marcar el link activo del menú ---------- */
   var secciones = ['top', 'celebracion', 'lugar', 'rsvp', 'fotos']
