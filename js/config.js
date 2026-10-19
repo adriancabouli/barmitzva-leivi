@@ -154,7 +154,7 @@ window.CONFIG = {
   /* ---------- CONFIRMACIÓN DE ASISTENCIA ---------- */
   rsvp: {
     titulo: "Confirmá tu asistencia",
-    texto: "Te pido que confirmes antes del 10 de noviembre.",
+    texto: "Te pido que confirmes antes del 20 de noviembre.",
     maxAcompanantes: 6,
 
     // Opción A (por defecto): las confirmaciones llegan por WhatsApp.
