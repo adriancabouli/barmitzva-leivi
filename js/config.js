@@ -108,7 +108,16 @@ window.CONFIG = {
      Lo que cambia en el link con ?fiesta. Lo que no está acá queda
      igual que en la versión normal.                               */
   versionFiesta: {
-    fechaISO: "2026-12-10T19:30:00-03:00",
+    fechaISO: "2026-12-10T19:30:00-03:00",   // el contador cuenta hasta la fiesta
+    galeria: {
+      titulo: "Momentos",
+      subtitulo: "Un poco de mi historia hasta acá",
+      fotos: [
+        { src: "img/galeria/foto-05.jpg", alt: "Leivi con la mochila, listo para el jardín" },
+        { src: "img/galeria/foto-06.jpg", alt: "Leivi de galera y camisa blanca" },
+        { src: "img/galeria/foto-10.jpg", alt: "Leivi en la playa" }
+      ]
+    },
     datos: [
       { icono: "calendario", titulo: "Fecha",      l1: "Jueves 10 de diciembre", l2: "de 2026" },
       { icono: "reloj",      titulo: "Horario",    l1: "19:30 hs",               l2: "Puntual" },
