@@ -786,8 +786,8 @@ p{margin:0 0 1em}
 }
 /* El nombre en hebreo: sin el espaciado de las mayúsculas, que separa las letras */
 .pie__hebreo{
-  font-family:"Frank Ruhl Libre",serif;font-size:1.45em;font-weight:500;
-  letter-spacing:.04em;color:var(--oro-400);
+  font-family:"Frank Ruhl Libre",serif;font-size:1.25em;font-weight:400;
+  letter-spacing:.04em;
 }
 
 /* ============================================================
