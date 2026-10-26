@@ -112,10 +112,17 @@ window.CONFIG = {
     galeria: {
       titulo: "Momentos",
       subtitulo: "Un poco de mi historia hasta acá",
+      // Todas menos la de la mochila, la de galera y la de la playa
       fotos: [
-        { src: "img/galeria/foto-05.jpg", alt: "Leivi con la mochila, listo para el jardín" },
-        { src: "img/galeria/foto-06.jpg", alt: "Leivi de galera y camisa blanca" },
-        { src: "img/galeria/foto-10.jpg", alt: "Leivi en la playa" }
+        { src: "img/galeria/foto-01.jpg", alt: "Leivi recién nacido, en brazos" },
+        { src: "img/galeria/foto-02.jpg", alt: "Leivi bebé, sentadito con camisa a cuadros" },
+        { src: "img/galeria/foto-03.jpg", alt: "Leivi encendiendo la januquiá" },
+        { src: "img/galeria/foto-04.jpg", alt: "Leivi con su mamadera" },
+        { src: "img/galeria/foto-07.jpg", alt: "Leivi haciendo fuerza" },
+        { src: "img/galeria/foto-08.jpg", alt: "Leivi de paseo, con gorro y mochila" },
+        { src: "img/galeria/foto-09.jpg", alt: "Leivi frente al glaciar Perito Moreno" },
+        { src: "img/galeria/foto-11.jpg", alt: "Leivi disfrazado en Purim" },
+        { src: "img/galeria/foto-12.jpg", alt: "Leivi de saco, brindando" }
       ]
     },
     datos: [
