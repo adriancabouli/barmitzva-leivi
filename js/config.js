@@ -30,6 +30,8 @@ window.CONFIG = {
   fechaISO: "2026-12-10T09:00:00-03:00",
   fechaPunteada: "10 · 12 · 2026",
   fechaLarga: "Jueves 10 de diciembre de 2026",
+  // La fecha hebrea del día: 30 de Kislev de 5787 (Rosh Jodesh Tevet, Janucá)
+  fechaHebrea: "ל׳ כסלו תשפ״ז",
 
   tituloPagina: "Bar Mitzvá de Leivi · 10.12.26",
   descripcionPagina: "Quiero que seas parte de este día tan especial.",

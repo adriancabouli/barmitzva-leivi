@@ -250,7 +250,7 @@ p{margin:0 0 1em}
    El degradé va SOLO en piezas grandes: en texto chico
    pierde contraste y lee gris sucio en vez de oro.
    ============================================================ */
-.oro,.hero__nombre,.hero__evento,.hero__fecha,.cuenta b,.titulo,.script-linea span{
+.oro,.hero__nombre,.hero__evento,.hero__fecha,.hero__hebreo,.cuenta b,.titulo,.script-linea span{
   background:var(--oro-grad);
   -webkit-background-clip:text;background-clip:text;
   color:transparent;-webkit-text-fill-color:transparent;
@@ -443,6 +443,14 @@ p{margin:0 0 1em}
   margin:.06em 0 .04em;padding:.02em .1em .12em;
 }
 
+/* La fecha hebrea, dorada debajo del nombre */
+.hero__hebreo{
+  font-family:"Frank Ruhl Libre",serif;font-weight:500;
+  font-size:clamp(1.15rem,3.8vw,1.7rem);
+  letter-spacing:.06em;line-height:1.2;
+  margin:.15em 0 0;
+}
+.hero__hebreo:empty{display:none}
 .hero__fecha{
   font-family:var(--f-titulo);font-weight:400;
   font-size:clamp(1.05rem,3.4vw,1.75rem);
