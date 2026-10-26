@@ -66,7 +66,7 @@ window.CONFIG = {
   datos: [
     { icono: "calendario", titulo: "Fecha",      l1: "Jueves 10 de diciembre", l2: "de 2026" },
     { icono: "reloj",      titulo: "Horario",    l1: "09:00 hs",               l2: "Puntual" },
-    { icono: "pin",        titulo: "Lugar",      l1: "Jabad Lubavitch",        l2: "Córdoba" },
+    { icono: "pin",        titulo: "Lugar",      l1: "Jabad Lubavitch",        l2: "Cofico, Córdoba" },
     { icono: "mono",       titulo: "Dress code", l1: "Formal",                 l2: "" }
   ],
 
@@ -112,7 +112,7 @@ window.CONFIG = {
     datos: [
       { icono: "calendario", titulo: "Fecha",      l1: "Jueves 10 de diciembre", l2: "de 2026" },
       { icono: "reloj",      titulo: "Horario",    l1: "19:30 hs",               l2: "Puntual" },
-      { icono: "pin",        titulo: "Lugar",      l1: "Jabad Lubavitch Cofico", l2: "Córdoba" },
+      { icono: "pin",        titulo: "Lugar",      l1: "Jabad Lubavitch",        l2: "Cofico, Córdoba" },
       { icono: "mono",       titulo: "Dress code", l1: "Formal",                 l2: "" }
     ]
   },
