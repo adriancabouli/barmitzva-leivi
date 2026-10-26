@@ -196,5 +196,7 @@ window.CONFIG = {
     instagram: "https://www.instagram.com/explore/tags/barmitzvadeleivi/"
   },
 
-  footer: "Leivi · 10.12.26"
+  // El pie dice el nombre hebreo y la fecha
+  footerNombre: "לוי יצחק",
+  footerFecha: "10.12.26"
 };

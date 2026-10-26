@@ -784,6 +784,11 @@ p{margin:0 0 1em}
   margin:0;font-family:var(--f-titulo);font-size:.66rem;
   letter-spacing:.3em;text-transform:uppercase;color:var(--crema-45);
 }
+/* El nombre en hebreo: sin el espaciado de las mayúsculas, que separa las letras */
+.pie__hebreo{
+  font-family:"Frank Ruhl Libre",serif;font-size:1.45em;font-weight:500;
+  letter-spacing:.04em;color:var(--oro-400);
+}
 
 /* ============================================================
    LIGHTBOX
