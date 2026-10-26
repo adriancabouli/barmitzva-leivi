@@ -5,6 +5,14 @@
   'use strict';
   var C = window.CONFIG;
 
+  /* Dos versiones de la invitación: la URL normal es la de la ceremonia;
+     con ?fiesta al final es la de la fiesta, que pisa los datos que
+     estén en CONFIG.versionFiesta (horario, lugar, contador).         */
+  var conFiesta = /(\?|&)fiesta\b/.test(location.search);
+  if (conFiesta && C.versionFiesta) {
+    Object.keys(C.versionFiesta).forEach(function (k) { C[k] = C.versionFiesta[k]; });
+  }
+
   function get(path) {
     return path.split('.').reduce(function (o, k) {
       return (o == null) ? null : o[k];
@@ -125,10 +133,7 @@
     }).join('');
   }
 
-  /* ---------- La celebración ----------
-     Dos versiones de la invitación: la URL normal muestra sólo la
-     ceremonia; con ?fiesta al final muestra todo el programa.      */
-  var conFiesta = /(\?|&)fiesta\b/.test(location.search);
+  /* ---------- La celebración ---------- */
   document.body.dataset.version = conFiesta ? 'completa' : 'ceremonia';
 
   var progEl = document.getElementById('programa');
@@ -381,11 +386,6 @@
   var form = document.getElementById('rsvp-form');
   var msg = document.getElementById('form-msg');
   var campoCant = document.getElementById('campo-cantidad');
-  // "¿A cuál evento?" sólo tiene sentido para los invitados a la fiesta;
-  // los del link normal están invitados sólo a la ceremonia.
-  var campoEvento = document.getElementById('campo-evento');
-  if (campoEvento) campoEvento.hidden = !conFiesta;
-
   if (form) {
     var maxAc = get('rsvp.maxAcompanantes');
     if (maxAc && form.elements.cantidad) form.elements.cantidad.max = maxAc;
@@ -393,7 +393,6 @@
     form.querySelectorAll('input[name=asistencia]').forEach(function (r) {
       r.addEventListener('change', function () {
         if (campoCant) campoCant.hidden = (form.elements.asistencia.value === 'No');
-        if (campoEvento) campoEvento.hidden = !conFiesta || form.elements.asistencia.value === 'No';
       });
     });
 
@@ -402,8 +401,9 @@
       msg.className = 'form__msg';
       msg.textContent = '';
 
-      // La columna "Asiste" de la planilla dice a qué viene: Ceremonia,
-      // Fiesta, Ceremonia y fiesta o No. El link sin ?fiesta sólo invita a la ceremonia.
+      // La columna "Asiste" de la planilla dice a qué viene: el link normal
+      // es el de la ceremonia y el de ?fiesta el de la fiesta (el campo
+      // "¿A cuál evento?" queda oculto con Fiesta marcada), o No.
       var viene = form.elements.asistencia.value !== 'No';
       var datos = {
         nombre: form.elements.nombre.value.trim(),
@@ -435,7 +435,6 @@
           if (ok) {
             form.reset();
             if (campoCant) campoCant.hidden = false;
-            if (campoEvento) campoEvento.hidden = !conFiesta;
             velo('listo', '¡Gracias! Recibimos tu confirmación');
           } else {
             velo('error', 'No pudimos enviarlo. Probá de nuevo en un momento.');

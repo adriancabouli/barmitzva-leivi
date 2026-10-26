@@ -9,7 +9,7 @@ window.CONFIG = {
      Poné true / false para prender o apagar cada bloque.       */
   secciones: {
     datos:     true,   // tira de fecha / horario / lugar / dress code
-    programa:  true,   // la celebración: ceremonia y fiesta
+    programa:  true,   // la celebración: ceremonia o fiesta, según el link
     lugar:     true,   // mapa
     galeria:   true,   // fotos de Leivi (las reales, en img/galeria/)
     rsvp:      true,   // confirmar asistencia
@@ -72,10 +72,10 @@ window.CONFIG = {
      Hay DOS versiones de la invitación:
 
        ceremonia  →  la URL normal del sitio
-       completa   →  la misma URL con  ?fiesta  al final
+       completa   →  la misma URL con  ?fiesta  al final (sólo la fiesta)
 
-     Los invitados que van sólo a la ceremonia reciben el link corto;
-     los que van también a la fiesta, el link con ?fiesta.
+     Los invitados a la ceremonia reciben el link corto;
+     los invitados a la fiesta, el link con ?fiesta.
      Ver el README para los dos links listos para mandar.           */
   programa: {
 
@@ -90,22 +90,28 @@ window.CONFIG = {
       }
     ],
 
-    // Para los invitados a la ceremonia y a la fiesta
+    // Para los invitados a la fiesta (link con ?fiesta): sólo la fiesta
     completa: [
-      {
-        icono: "estrella",
-        titulo: "Ceremonia",
-        hora: "09:00 hs",
-        lugar: "Jabad Lubavitch Córdoba",
-        detalle: "Colocación de tefilín y lectura de Torá.<br>Seguido de lejaim"
-      },
       {
         icono: "musica",
         titulo: "Fiesta",
         hora: "19:30 hs",
-        lugar: "Jabad Lubavitch Córdoba",
+        lugar: "Jabad Lubavitch Cofico",
         detalle: "Cena, música y baile hasta el final."
       }
+    ]
+  },
+
+  /* ---------- VERSIÓN FIESTA ----------
+     Lo que cambia en el link con ?fiesta. Lo que no está acá queda
+     igual que en la versión normal.                               */
+  versionFiesta: {
+    fechaISO: "2026-12-10T19:30:00-03:00",
+    datos: [
+      { icono: "calendario", titulo: "Fecha",      l1: "Jueves 10 de diciembre", l2: "de 2026" },
+      { icono: "reloj",      titulo: "Horario",    l1: "19:30 hs",               l2: "Puntual" },
+      { icono: "pin",        titulo: "Lugar",      l1: "Jabad Lubavitch Cofico", l2: "Córdoba" },
+      { icono: "mono",       titulo: "Dress code", l1: "Formal",                 l2: "" }
     ]
   },
 

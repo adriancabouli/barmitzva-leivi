@@ -6,10 +6,10 @@ METHOD:PUBLISH
 BEGIN:VEVENT
 UID:completa@barmitzvaleivi.com
 DTSTAMP:20260818T000000Z
-DTSTART:20261210T120000Z
-DTEND:20261211T020000Z
-SUMMARY:Bar Mitzvá de Leivi
-LOCATION:Jabad Lubavitch Córdoba, Sucre 1378/80, Barrio Cofico, Córdoba
+DTSTART:20261210T223000Z
+DTEND:20261211T040000Z
+SUMMARY:Fiesta del Bar Mitzvá de Leivi
+LOCATION:Jabad Lubavitch Cofico, Sucre 1378/80, Barrio Cofico, Córdoba
 DESCRIPTION:https://barmitzvaleivi.com
 END:VEVENT
 END:VCALENDAR
