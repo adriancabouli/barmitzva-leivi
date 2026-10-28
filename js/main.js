@@ -386,6 +386,7 @@
   var form = document.getElementById('rsvp-form');
   var msg = document.getElementById('form-msg');
   var campoCant = document.getElementById('campo-cantidad');
+  var campoRestr = document.getElementById('campo-restricciones');
   if (form) {
     var maxAc = get('rsvp.maxAcompanantes');
     if (maxAc && form.elements.cantidad) form.elements.cantidad.max = maxAc;
@@ -393,6 +394,7 @@
     form.querySelectorAll('input[name=asistencia]').forEach(function (r) {
       r.addEventListener('change', function () {
         if (campoCant) campoCant.hidden = (form.elements.asistencia.value === 'No');
+        if (campoRestr) campoRestr.hidden = (form.elements.asistencia.value === 'No');
       });
     });
 
@@ -410,6 +412,8 @@
         contacto: form.elements.contacto.value.trim(),
         asistencia: !viene ? 'No' : (conFiesta ? form.elements.evento.value : 'Ceremonia'),
         cantidad: viene ? form.elements.cantidad.value : 0,
+        // Va a la columna G de la planilla
+        restricciones: viene ? form.elements.restricciones.value.trim() : '',
         mensaje: form.elements.mensaje.value.trim()
       };
 
@@ -435,6 +439,7 @@
           if (ok) {
             form.reset();
             if (campoCant) campoCant.hidden = false;
+            if (campoRestr) campoRestr.hidden = false;
             velo('listo', '¡Gracias! Recibimos tu confirmación');
           } else {
             velo('error', 'No pudimos enviarlo. Probá de nuevo en un momento.');
@@ -449,6 +454,7 @@
         'Contacto: ' + datos.contacto + '\n' +
         'Asiste: ' + datos.asistencia + '\n' +
         (datos.asistencia !== 'No' ? 'Cantidad: ' + datos.cantidad + '\n' : '') +
+        (datos.restricciones ? 'Restricciones: ' + datos.restricciones + '\n' : '') +
         (datos.mensaje ? 'Mensaje: ' + datos.mensaje : '');
 
       window.open('https://wa.me/' + get('rsvp.whatsapp') + '?text=' + encodeURIComponent(texto), '_blank');
